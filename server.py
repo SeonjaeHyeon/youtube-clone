@@ -25,6 +25,6 @@ def watch(name=None):
     db[name]['views'] += 1
 
     with open('db.json', 'w', encoding='utf-8') as f:
-        json.dump(db, f)
+        json.dump(db, f, indent=4)
 
     return render_template('watch.html', video=video)

@@ -1,1 +1,14 @@
-{"big_buck_bunny": {"path": "videos/big_buck_bunny.mp4", "thumnail": "thumnails/big_buck_bunny.jpg", "title": "\ud1a0\ub07c \uc560\ub2c8\uba54\uc774\uc158", "views": 8}, "earth": {"path": "videos/earth.mp4", "thumnail": "thumnails/earth.jpg", "title": "\uc6b0\uc8fc\uc5d0\uc11c \ubc14\ub77c\ubcf8 \uc9c0\uad6c", "views": 11}}
+{
+    "big_buck_bunny": {
+        "path": "videos/big_buck_bunny.mp4",
+        "thumnail": "thumnails/big_buck_bunny.jpg",
+        "title": "\ud1a0\ub07c \uc560\ub2c8\uba54\uc774\uc158",
+        "views": 9
+    },
+    "earth": {
+        "path": "videos/earth.mp4",
+        "thumnail": "thumnails/earth.jpg",
+        "title": "\uc6b0\uc8fc\uc5d0\uc11c \ubc14\ub77c\ubcf8 \uc9c0\uad6c",
+        "views": 11
+    }
+}
