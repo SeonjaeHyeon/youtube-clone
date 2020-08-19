@@ -4,7 +4,7 @@ import cv2, os, json
 
 app = Flask(__name__)
 
-with open('db.json', 'r') as f:
+with open('db.json', 'r', encoding='utf-8') as f:
     db = json.load(f)
 
 @app.route('/')
@@ -21,4 +21,10 @@ def home():
 @app.route('/watch/')
 @app.route('/watch/<name>')
 def watch(name=None):
-    return render_template('watch.html', name=name)
+    video = db[name]
+    db[name]['views'] += 1
+
+    with open('db.json', 'w', encoding='utf-8') as f:
+        json.dump(db, f)
+
+    return render_template('watch.html', video=video)

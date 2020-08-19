@@ -7,7 +7,10 @@
     <h1>Select one which you want to see!</h1>
     <div>
       {% for name, video in db.items() %}
-      <p><a href="/watch/{{name}}"><img src="/static/{{video.thumnail}}"><br>{{name}}.mp4</a></p>
+      <a href="/watch/{{name}}">
+        <img src="/static/{{video.thumnail}}">
+        <p>{{video.title}}</p>
+      </a>
       {% endfor %}
     </div>
   </body>
