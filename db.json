@@ -1,0 +1,10 @@
+{
+    "big_buck_bunny": {
+        "path": "videos/big_buck_bunny.mp4",
+        "thumnail": "thumnails/big_buck_bunny.jpg"
+    },
+    "earth": {
+        "path": "videos/earth.mp4",
+        "thumnail": "thumnails/earth.jpg"
+    }
+}

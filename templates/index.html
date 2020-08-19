@@ -6,8 +6,9 @@
   <body>
     <h1>Select one which you want to see!</h1>
     <div>
-      <p><a href="/watch/big_buck_bunny"><img src="/static/thumnails/big_buck_bunny.jpg"><br>big_buck_bunny.mp4</a></p>
-      <p><a href="/watch/earth"><img src="/static/thumnails/earth.jpg"><br>earth.mp4</a></p>
+      {% for name, video in db.items() %}
+      <p><a href="/watch/{{name}}"><img src="/static/{{video.thumnail}}"><br>{{name}}.mp4</a></p>
+      {% endfor %}
     </div>
   </body>
 </html>
