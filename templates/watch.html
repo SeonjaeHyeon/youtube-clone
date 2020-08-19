@@ -1,0 +1,12 @@
+<!doctype html>
+<title>Playing Video</title>
+{% if name %}
+  <h1>{{ name }}.mp4</h1>
+{% else %}
+  <h1>A Random Video</h1>
+{% endif %}
+
+<video width="1280" height="720" controls autoplay>
+  <source src="/static/{{ name }}.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
