@@ -1,18 +1,49 @@
 <!doctype html>
-<title>Playing Video</title>
+<head>
+  <title>Playing Video</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/rating.css">
+  <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+  </script>
+</head>
+<body style="padding-left: 90px; padding-right: 90px; padding-top: 10px;">
+  <div id="first" style="float: left;">
+    <video width="1280" height="720" controls autoplay>
+      <source src="/static/{{video.path}}" type="video/mp4">
+    Your browser does not support the video tag.
+    </video>
+    <div>
+      {% if video.title %}
+      <h1 style="font-size: 18px; font-weight: normal;">{{video.title}}</h1>
+      {% else %}
+      <h1>A Random Video</h1>
+      {% endif %}
+      <div id="info" style="color: #808080; display: flex; border-bottom: 1px solid #ddd;">
+        <div id="text" style="height: auto;">
+          <div id="views" style="font-size: 14px; display: inline-block;">조회수 {{video.views}}회</div>
+          <div id="date" style="font-size: 14px; display: inline-block;">• {{video.date}}</div>
+        </div>
+        <div id="flex-box" style="flex-grow: 1; flex-shrink: 1;"></div>
+        <div class="rating">
+          <div class="like grow">
+            <i class="fa fa-thumbs-up"></i>
+          </div>
+          <div class="dislike grow">
+            <i class="fa fa-thumbs-down"></i>
+          </div>
+        </div>
+        <script>
+          $('.like, .dislike').on('click', function() {
+            event.preventDefault();
+            $('.active').removeClass('active');
+            $(this).addClass('active');
+          });
+        </script>
+      </div>
+    </div>
+    
+  </div>
+  <div id="second">
 
-<video width="1280" height="720" controls autoplay>
-  <source src="/static/{{video.path}}" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-<p>
-  {% if video.title %}
-  <h1>{{video.title}}</h1>
-  {% else %}
-  <h1>A Random Video</h1>
-  {% endif %}
-</p><br>
-<p>
-  <div>조회수: {{video.views}}회</div>
-  <div>{{video.date}}</div>
-</p>
+  </div>
+</body>

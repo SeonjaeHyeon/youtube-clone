@@ -1,0 +1,22 @@
+  .rating {
+    display: inline-block;
+    font-size: 20px;
+  }
+  
+  .like,
+  .dislike {
+    display: inline-block;
+    cursor: pointer;
+    padding: 8px;
+  }
+  
+  .dislike:hover,
+  .like:hover {
+    color: #065FD4;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+  }
+  
+  .active {
+    color: #065FD4;
+  }
