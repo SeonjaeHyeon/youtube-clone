@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, request
 import cv2, os, json
 
 app = Flask(__name__)
@@ -21,6 +20,9 @@ def home():
 @app.route('/watch/')
 @app.route('/watch/<name>')
 def watch(name=None):
+    with open('db.json', 'r', encoding='utf-8') as f:
+        db = json.load(f)
+
     video = db[name]
     db[name]['views'] += 1
 
@@ -28,3 +30,32 @@ def watch(name=None):
         json.dump(db, f, indent=4)
 
     return render_template('watch.html', video=video)
+
+@app.route('/rate')
+def rate():
+    try:
+        if request.method != 'GET':
+            return 'Wrong request method.'
+
+        with open('db.json', 'r', encoding='utf-8') as f:
+            db = json.load(f)
+
+        param = request.args.to_dict()
+
+        if param['type'] == 'like':
+            if param['mode'] == 'submit':
+                db[param['name']]['rate']['like'] += 1
+            elif param['mode'] == 'cancel':
+                db[param['name']]['rate']['like'] -= 1
+        elif param['type'] == 'dislike':
+            if param['mode'] == 'submit':
+                db[param['name']]['rate']['dislike'] += 1
+            elif param['mode'] == 'cancel':
+                db[param['name']]['rate']['dislike'] -= 1
+
+        with open('db.json', 'w', encoding='utf-8') as f:
+            json.dump(db, f, indent=4)
+    except:
+        return json.dumps({'message':'failed'})
+    
+    return json.dumps({'message':'success'})
