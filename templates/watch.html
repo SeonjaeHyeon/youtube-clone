@@ -39,6 +39,10 @@
             <i class="fa fa-thumbs-down"></i>
             <span class="r_count">{{video.rate.dislike}}</span>
           </div>
+          <div class='c_dislike' style="height: 2px; background: #ddd">
+            <div class='c_like'>
+            </div>
+          </div>
         </div>
         <script>
           function SubForm() {
@@ -80,6 +84,33 @@
               $(this).addClass('active');
             }            
           });
+
+          $('.r_count').on("DOMSubtreeModified", function() {
+            var h_like = $('.r_count')[0];
+            var h_dislike = $('.r_count')[1];
+
+            var b_like = Number(h_like.innerText);
+            var b_dislike = Number(h_dislike.innerText);
+
+            var p_like = b_like / (b_like + b_dislike) * 100;
+            if (isNaN(p_like)) {
+              $('.c_like').attr('style', 'height: 2px; background-color: #808080; width: 50%');
+            }
+            else {
+              $('.c_like').attr('style', 'height: 2px; background-color: #065FD4; width: ' + p_like + '%');
+            }
+          });
+
+          var h_like = $('.r_count')[0];
+          var h_dislike = $('.r_count')[1];
+          var p_like = Number(h_like.innerText) / (Number(h_like.innerText) + Number(h_dislike.innerText)) * 100;
+
+          if (isNaN(p_like)) {
+            $('.c_like').attr('style', 'height: 2px; background-color: #808080; width: 50%');
+          }
+          else {
+            $('.c_like').attr('style', 'height: 2px; background-color: #065FD4; width: ' + p_like + '%');
+          }
         </script>
       </div>
     </div>
