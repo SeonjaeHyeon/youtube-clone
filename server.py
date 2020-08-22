@@ -41,17 +41,24 @@ def rate():
             db = json.load(f)
 
         param = request.args.to_dict()
+        print(param)
 
         if param['type'] == 'like':
             if param['mode'] == 'submit':
                 db[param['name']]['rate']['like'] += 1
             elif param['mode'] == 'cancel':
                 db[param['name']]['rate']['like'] -= 1
+            elif param['mode'] == 'change':
+                db[param['name']]['rate']['like'] += 1
+                db[param['name']]['rate']['dislike'] -= 1
         elif param['type'] == 'dislike':
             if param['mode'] == 'submit':
                 db[param['name']]['rate']['dislike'] += 1
             elif param['mode'] == 'cancel':
                 db[param['name']]['rate']['dislike'] -= 1
+            elif param['mode'] == 'change':
+                db[param['name']]['rate']['dislike'] += 1
+                db[param['name']]['rate']['like'] -= 1
 
         with open('db.json', 'w', encoding='utf-8') as f:
             json.dump(db, f, indent=4)

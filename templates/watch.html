@@ -61,18 +61,18 @@
               SubForm();
             }
             else {
-              $('.active').removeClass('active');
-
               document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
               document.getElementById('f_mode').setAttribute('value', 'submit');
+
+              if ($('.active').length > 0) {
+                $('.active').removeClass('active');
+
+                document.getElementById('f_mode').setAttribute('value', 'change');
+              }
               SubForm();
 
               $(this).addClass('active');
-            }
-
-            
-
-            
+            }            
           });
         </script>
       </div>
