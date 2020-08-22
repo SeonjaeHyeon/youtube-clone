@@ -33,9 +33,11 @@
           </form>
           <div id="like_btn" class="like">
             <i class="fa fa-thumbs-up"></i>
+            <span class="r_count">{{video.rate.like}}</span>
           </div>
           <div id="dislike_btn" class="dislike">
             <i class="fa fa-thumbs-down"></i>
+            <span class="r_count">{{video.rate.dislike}}</span>
           </div>
         </div>
         <script>
@@ -59,18 +61,22 @@
               document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
               document.getElementById('f_mode').setAttribute('value', 'cancel');
               SubForm();
+              
+              $('.r_count', this).text(Number($('.r_count', this).text()) - 1);
             }
             else {
               document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
               document.getElementById('f_mode').setAttribute('value', 'submit');
 
               if ($('.active').length > 0) {
+                $('.active').find('.r_count').text(Number($('.active').find('.r_count').text()) - 1);
                 $('.active').removeClass('active');
 
                 document.getElementById('f_mode').setAttribute('value', 'change');
               }
               SubForm();
 
+              $('.r_count', this).text(Number($('.r_count', this).text()) + 1);
               $(this).addClass('active');
             }            
           });

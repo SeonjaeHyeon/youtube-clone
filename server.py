@@ -41,7 +41,6 @@ def rate():
             db = json.load(f)
 
         param = request.args.to_dict()
-        print(param)
 
         if param['type'] == 'like':
             if param['mode'] == 'submit':

@@ -7,7 +7,8 @@
   .dislike {
     display: inline-block;
     cursor: pointer;
-    padding: 8px;
+    padding-bottom: 12px;
+    padding-right: 20px;
   }
   
   .dislike:hover,
@@ -19,4 +20,8 @@
   
   .active {
     color: #065FD4;
+  }
+
+  .r_count {
+    font-size: 17px;
   }
