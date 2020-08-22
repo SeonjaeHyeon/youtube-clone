@@ -31,10 +31,10 @@
             <input type="hidden" id="f_type" name="type">
             <input type="hidden" id="f_mode" name="mode">
           </form>
-          <div class="like">
+          <div id="like_btn" class="like">
             <i class="fa fa-thumbs-up"></i>
           </div>
-          <div class="dislike">
+          <div id="dislike_btn" class="dislike">
             <i class="fa fa-thumbs-down"></i>
           </div>
         </div>
@@ -50,14 +50,29 @@
 
           $('.like, .dislike').on('click', function() {
             event.preventDefault();
-            $('.active').removeClass('active');
 
             document.getElementById('f_name').setAttribute('value', window.location.href.split('/').reverse()[0]);
-            document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
-            document.getElementById('f_mode').setAttribute('value', 'submit');
-            SubForm();
 
-            $(this).addClass('active');
+            if ($('.active').attr('id') == $(this).attr('id')) {
+              $('.active').removeClass('active');
+
+              document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
+              document.getElementById('f_mode').setAttribute('value', 'cancel');
+              SubForm();
+            }
+            else {
+              $('.active').removeClass('active');
+
+              document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
+              document.getElementById('f_mode').setAttribute('value', 'submit');
+              SubForm();
+
+              $(this).addClass('active');
+            }
+
+            
+
+            
           });
         </script>
       </div>
