@@ -26,3 +26,80 @@
   .r_count {
     font-size: 17px;
   }
+
+  .share {
+    cursor: pointer;
+    font-size: 20px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .share:hover {
+    color: #065FD4;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+  }
+
+  .p_dialog {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .p_content {
+    background-color: #FFFFFF;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 470px;
+    height: 280px;
+  }
+
+  .p_close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    top: -10px;
+  }
+
+  .p_close:hover,
+  .p_close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .p_bar {
+    margin-top: 24px; 
+    background-color: #FAFAFA; 
+    border: 1px solid #EDEDED; 
+    height: 40px;
+  }
+
+  .p_link {
+    position: relative;
+    top: 9px;
+    border: none;
+    background-color: #FAFAFA;
+    font-size: 14px;
+    margin-left: 16px;
+    float: left;
+  }
+
+  .p_copy {
+    position: relative;
+    top: 9px;
+    padding-right: 28px;
+    font-size: 14px;
+    color: #065FD4;
+    float: right;
+    cursor: pointer;    
+  }

@@ -6,8 +6,8 @@
   <link rel="stylesheet" type="text/css" href="/static/css/info-box.css">
   </script>
 </head>
-<body style="padding-left: 90px; padding-right: 90px; padding-top: 10px;">
-  <div id="first" style="float: left;">
+<body style="margin: 0px;">
+  <div id="first" style="float: left; padding-left: 98px; padding-right: 98px; padding-top: 18px;">
     <video width="1280" height="720" controls autoplay>
       <source src="/static/{{video.path}}" type="video/mp4">
     Your browser does not support the video tag.
@@ -43,6 +43,10 @@
             <div class='c_like'>
             </div>
           </div>
+        </div>
+        <div class="share">
+          <i class="fas fa-share"></i>
+          <span style="font-size: 17px;">공유</span>
         </div>
         <script>
           function SubForm() {
@@ -119,4 +123,33 @@
   <div id="second">
 
   </div>
+  <div id="p_dialog" class="p_dialog">
+    <div class="p_content">
+      <span class="p_close">&times;</span>
+      <div style="font-size: 16px;">공유</div>
+      <div class="p_bar">
+        <input class="p_link" readonly size="45" onclick="this.select()">
+      <div class="p_copy">복사</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $('.share').on('click', function() {
+      $('.p_dialog')[0].style.display = "block";
+      $('.p_link')[0].value = window.location.href;
+    });
+    $('.p_close').on('click', function() {
+      $('.p_dialog')[0].style.display = "none";
+    });
+    window.onclick = function(event) {
+      var dialog = document.getElementById('p_dialog');
+      if (event.target == dialog) {
+        $('.p_dialog')[0].style.display = "none";
+      }
+    }
+    $('.p_copy').on('click', function() {
+      $('.p_link')[0].select();
+      document.execCommand("Copy");
+    });
+  </script>
 </body>
