@@ -1,0 +1,25 @@
+  #progressBar { 
+    color:#FFF;
+    height:10px;
+    cursor: pointer;
+  }
+
+  #progress {
+    background-color:#FF0000;
+    height:3.5px;
+  }
+
+  #volume {
+    display: none;
+  }
+
+  #playpause,
+  #mute {
+    height: 30px;
+  }
+
+  /*
+  #mute:hover + #volume {
+    display: inline-block;
+  }
+  */

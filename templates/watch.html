@@ -4,14 +4,96 @@
   <script src="https://kit.fontawesome.com/ecb8a71d9f.js" crossorigin="anonymous"></script>
   <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/static/css/info-box.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/video-control.css">
   </script>
 </head>
 <body style="margin: 0px;">
   <div id="first" style="float: left; padding-left: 98px; padding-right: 98px; padding-top: 18px;">
-    <video width="1280" height="720" controls autoplay>
-      <source src="/static/{{video.path}}" type="video/mp4">
-    Your browser does not support the video tag.
-    </video>
+    <div id="video_container">
+      <video id="video" width="1280" height="720" autoplay>
+        <source src="/static/{{video.path}}" type="video/mp4">
+      Your browser does not support the video tag.
+      </video>
+      <div id="progressBar">
+        <div style="height: 3.5px; background: #DDD">
+          <div id="progress"></div>
+        </div>
+      </div>
+      <div id="controls">
+        <button id="playpause" title="play" onclick="togglePlayPause()">►</button>
+        <button id="mute" title="unmuted" onclick="toggleMute()">&#128266;</button>
+        <input id="volume" min="0" max="1" step="0.01" type="range" onchange="setVolume()">
+      </div>
+      <script>
+        function togglePlayPause() {
+          var playpause = document.getElementById("playpause");
+          if (video.paused || video.ended) {
+            playpause.title = "pause";
+            playpause.innerHTML = "❚ ❚";
+            video.play();
+          }
+          else {
+            playpause.title = "play";
+            playpause.innerHTML = "►";
+            video.pause();
+          }
+        }
+
+        video.addEventListener('play', function() {
+          var playpause = document.getElementById("playpause");
+          playpause.title = "pause";
+          playpause.innerHTML = "❚ ❚";
+        }, false);
+        video.addEventListener('pause', function() {
+          var playpause = document.getElementById("playpause");
+          playpause.title = "play";
+          playpause.innerHTML = "►";
+        }, false);
+        
+        function toggleMute() {
+          video.muted = !video.muted;
+          if (video.muted) {
+            mute.title = "muted"
+            mute.innerHTML = "&#128264;";
+          }
+          else {
+            mute.title = "unmuted"
+            mute.innerHTML = "&#128266;";
+          }
+        }
+
+        function setVolume() {
+          var volume = document.getElementById("volume");
+          video.volume = volume.value;
+        }
+
+        mute.addEventListener("mouseover", function() {
+          volume.style.display = "inline-block";
+        }, false);
+
+        controls.addEventListener("mouseleave", function() {
+          volume.style.display = "none";
+        }, false);
+
+        function updateProgress() {
+          var progress = document.getElementById("progress");
+          var value = 0;
+          if (video.currentTime > 0) {
+            value = (100 / video.duration) * video.currentTime;
+            // value = value.toFixed(2);
+          }
+          progress.style.width = value + "%";
+        }
+
+        video.addEventListener("timeupdate", updateProgress, false);
+        progressBar.addEventListener("click", function(event) {
+          var x = event.offsetX;
+          var bx = this.offsetWidth;
+          console.log(video.duration * x / bx);
+          video.currentTime = video.duration * x / bx;
+        });
+      </script>
+    </div>
     <div>
       {% if video.title %}
       <h1 style="font-size: 18px; font-weight: normal;">{{video.title}}</h1>
