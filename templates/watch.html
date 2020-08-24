@@ -14,15 +14,17 @@
         <source src="/static/{{video.path}}" type="video/mp4">
       Your browser does not support the video tag.
       </video>
-      <div id="progressBar">
-        <div style="height: 3.5px; background: #DDD">
-          <div id="progress"></div>
+      <div id="video_manage">
+        <div id="progressBar">
+          <div style="height: 3px; background: #DDD">
+            <div id="progress"></div>
+          </div>
         </div>
-      </div>
-      <div id="controls">
-        <button id="playpause" title="play" onclick="togglePlayPause()">►</button>
-        <button id="mute" title="unmuted" onclick="toggleMute()">&#128266;</button>
-        <input id="volume" min="0" max="1" step="0.01" type="range" onchange="setVolume()">
+        <div id="controls">
+          <button id="playpause" title="play" onclick="togglePlayPause()">►</button>
+          <button id="mute" title="unmuted" onclick="toggleMute()">&#128266;</button>
+          <input id="volume" min="0" max="1" step="0.01" type="range" onchange="setVolume()">
+        </div>
       </div>
       <script>
         function togglePlayPause() {

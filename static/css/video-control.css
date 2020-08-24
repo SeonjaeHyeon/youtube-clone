@@ -1,4 +1,22 @@
-  #progressBar { 
+  #video_container {
+    position: relative;
+  }
+
+  #video_manage {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+
+  #video_container:hover #video_manage {
+    opacity: .9;
+  }
+  
+  #progressBar {
     color:#FFF;
     height:10px;
     cursor: pointer;
@@ -6,7 +24,7 @@
 
   #progress {
     background-color:#FF0000;
-    height:3.5px;
+    height:3px;
   }
 
   #volume {
