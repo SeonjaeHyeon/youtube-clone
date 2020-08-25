@@ -36,8 +36,16 @@
     height: 30px;
   }
 
-  /*
-  #mute:hover + #volume {
+  .left_controls,
+  .right_controls {
     display: inline-block;
+    color: #FFF;
   }
-  */
+
+  .right_controls {
+    float: right;
+    font-size: 18px;
+    padding-right: 10px;
+    padding-top: 2px;
+    cursor: pointer;
+  }

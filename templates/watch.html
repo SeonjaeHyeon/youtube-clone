@@ -21,9 +21,16 @@
           </div>
         </div>
         <div id="controls">
-          <button id="playpause" title="play" onclick="togglePlayPause()">►</button>
-          <button id="mute" title="unmuted" onclick="toggleMute()">&#128266;</button>
-          <input id="volume" min="0" max="1" step="0.01" type="range" onchange="setVolume()">
+          <div class="left_controls">
+            <button id="playpause" title="play" onclick="togglePlayPause()">►</button>
+            <button id="mute" title="unmuted" onclick="toggleMute()">&#128266;</button>
+            <input id="volume" min="0" max="1" step="0.01" value="1" type="range" onchange="setVolume()">
+          </div>
+          <div class="right_controls">
+            <div id="fullscreen">
+              <i id="fs_icon" class="fas fa-expand"></i>
+            </div>
+          </div>
         </div>
       </div>
       <script>
@@ -91,9 +98,24 @@
         progressBar.addEventListener("click", function(event) {
           var x = event.offsetX;
           var bx = this.offsetWidth;
-          console.log(video.duration * x / bx);
           video.currentTime = video.duration * x / bx;
         });
+
+        fullscreen.addEventListener("click", function() {
+          if (document.fullscreenElement == null) {
+            video_container.webkitRequestFullscreen();
+            $('#fs_icon').attr('class', 'fas fa-compress');
+            video.width = screen.width;
+            video.height = screen.height;
+          }
+          else {
+            document.exitFullscreen();
+            $('#fs_icon').attr('class', 'fas fa-expand');
+            video.width = "1280";
+            video.height = "720";
+          }
+        });
+
       </script>
     </div>
     <div>
