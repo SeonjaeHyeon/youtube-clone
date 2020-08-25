@@ -23,9 +23,24 @@
     cursor: pointer;
   }
 
+  #back_progress {
+    height: 3px;
+    background: #DDD;
+  }
+
   #progress {
     background-color:#FF0000;
     height:3px;
+  }
+
+  #back_progress:hover {
+    position: relative;
+    bottom: 1px;
+    height: 5px;
+  }
+
+  #back_progress:hover div {
+    height: 5px;
   }
 
   #volume {

@@ -16,7 +16,7 @@
       </video>
       <div id="video_manage">
         <div id="progressBar">
-          <div style="height: 3px; background: #DDD">
+          <div id="back_progress">
             <div id="progress"></div>
           </div>
         </div>
@@ -101,6 +101,7 @@
         }
 
         video.addEventListener("timeupdate", updateProgress, false);
+
         progressBar.addEventListener("click", function(event) {
           var x = event.offsetX;
           var bx = this.offsetWidth;
