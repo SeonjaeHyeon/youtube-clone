@@ -122,6 +122,14 @@
           }
         });
 
+        document.onwebkitfullscreenchange = function() {
+          if (document.fullscreenElement == null) {
+            $('#fs_icon').attr('class', 'fas fa-expand');
+            video.width = "1280";
+            video.height = "720";
+          }
+        }
+
       </script>
     </div>
     <div>
