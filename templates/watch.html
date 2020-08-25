@@ -64,10 +64,16 @@
           if (video.muted) {
             mute.title = "muted"
             mute.innerHTML = "&#128264;";
+
+            var volume = document.getElementById("volume");
+            volume.value = "0";
           }
           else {
             mute.title = "unmuted"
             mute.innerHTML = "&#128266;";
+
+            var volume = document.getElementById("volume");
+            volume.value = "0.5";
           }
         }
 
