@@ -1,5 +1,6 @@
   #video_container {
     position: relative;
+    background-color: black;
   }
 
   #video_manage {
