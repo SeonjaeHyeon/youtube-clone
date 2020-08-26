@@ -67,18 +67,30 @@
 
             var volume = document.getElementById("volume");
             volume.value = "0";
+            $('#volume').css("background", "transparent");
           }
           else {
             mute.title = "unmuted"
             mute.innerHTML = "&#128266;";
 
             var volume = document.getElementById("volume");
-            volume.value = "0.5";
+            volume.value = "50";
+            $('#volume').css("background", "linear-gradient(to right, #FFF 50%,  transparent 50%)");
           }
         }
 
         function setVolume() {
           var volume = document.getElementById("volume");
+
+          if (volume.value == 0) {
+            mute.title = "muted"
+            mute.innerHTML = "&#128264;";
+          }
+          else if (volume.value > 0) {
+            mute.title = "unmuted"
+            mute.innerHTML = "&#128266;";
+          }
+
           video.volume = volume.value / 100;
         }
 
