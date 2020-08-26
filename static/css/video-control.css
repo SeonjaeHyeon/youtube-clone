@@ -45,6 +45,28 @@
 
   #volume {
     display: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    position: relative;
+    bottom: 3px;
+    background: linear-gradient(to right, #FFF 50%,  transparent 50%);
+    height: 3px;
+    width: 52px;
+  }
+
+  #volume:focus {
+    outline: none;
+  }
+
+  #volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #FFF;
+    height: 12px;
+    width: 12px;
+    position: relative;
+    bottom: -1px;
+    border-radius: 50%;
+    /*box-shadow: -80px 0 0 80px #FFF;*/
   }
 
   #playpause,
