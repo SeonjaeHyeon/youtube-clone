@@ -26,9 +26,9 @@
             <button id="mute" title="unmuted" onclick="toggleMute()">&#128266;</button>
             <input id="volume" value="50" type="range" onchange="setVolume()">
             <div id="time">
-              <span id="t_now">1:00</span>
+              <span id="t_now">0:00</span>
               <span id="t_slash">/</span>
-              <span id="t_end">2:00</span>
+              <span id="t_end">0:00</span>
             </div>
           </div>
           <div class="right_controls">
@@ -127,6 +127,9 @@
             // value = value.toFixed(2);
           }
           progress.style.width = value + "%";
+
+          t_end.innerText = String(Math.floor(video.duration / 60)) + ":" + String(Math.floor(video.duration) - Math.floor(video.duration / 60) * 60);
+          t_now.innerText = String(Math.floor(video.currentTime / 60)) + ":" + String(Math.floor(video.currentTime) - Math.floor(video.currentTime / 60) * 60);
         }
 
         video.addEventListener("timeupdate", updateProgress, false);
