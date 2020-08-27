@@ -25,6 +25,11 @@
             <button id="playpause" title="play" onclick="togglePlayPause()">►</button>
             <button id="mute" title="unmuted" onclick="toggleMute()">&#128266;</button>
             <input id="volume" value="50" type="range" onchange="setVolume()">
+            <div id="time">
+              <span id="t_now">1:00</span>
+              <span id="t_slash">/</span>
+              <span id="t_end">2:00</span>
+            </div>
           </div>
           <div class="right_controls">
             <div id="fullscreen">
@@ -104,11 +109,14 @@
         }, false);
 
         mute.addEventListener("mouseover", function() {
-          volume.style.display = "inline-block";
+          volume.style.width = "52px";
+          $('<style id="v_style">#volume::-webkit-slider-thumb { width: 12px; }</style>').appendTo('head');
         }, false);
 
         controls.addEventListener("mouseleave", function() {
-          volume.style.display = "none";
+          volume.style.width = "0px";
+          // $('<style>#volume::-webkit-slider-thumb { width: 0px; }</style>').appendTo('head');
+          $('#v_style').remove();
         }, false);
 
         function updateProgress() {

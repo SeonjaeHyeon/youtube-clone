@@ -44,14 +44,14 @@
   }
 
   #volume {
-    display: none;
     -webkit-appearance: none;
     background-color: transparent;
     position: relative;
     bottom: 3px;
     background: linear-gradient(to right, #FFF 50%,  transparent 50%);
     height: 3px;
-    width: 52px;
+    width: 0px;
+    transition: .5s;
   }
 
   #volume:focus {
@@ -62,7 +62,7 @@
     -webkit-appearance: none;
     background: #FFF;
     height: 12px;
-    width: 12px;
+    width: 0px;
     position: relative;
     bottom: -1px;
     border-radius: 50%;
@@ -72,6 +72,32 @@
   #playpause,
   #mute {
     height: 30px;
+  }
+
+  #time {
+    display: inline-block;
+    padding: 5px;
+  }
+
+  #time span {
+    font-size: 13px;
+  }
+
+  #t_now {
+    position: absolute;
+    bottom: 17px;
+  }
+
+  #t_slash {
+    position: relative;
+    left: 30px;
+    opacity: .8;
+  }
+
+  #t_end {
+    position: relative;
+    left: 28px;
+    opacity: .8;
   }
 
   .left_controls,
