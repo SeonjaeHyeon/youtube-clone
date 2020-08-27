@@ -128,8 +128,20 @@
           }
           progress.style.width = value + "%";
 
-          t_end.innerText = String(Math.floor(video.duration / 60)) + ":" + String(Math.floor(video.duration) - Math.floor(video.duration / 60) * 60);
-          t_now.innerText = String(Math.floor(video.currentTime / 60)) + ":" + String(Math.floor(video.currentTime) - Math.floor(video.currentTime / 60) * 60);
+          var end_min = Math.floor(video.duration / 60);
+          var end_sec = Math.floor(video.duration) - end_min * 60;
+          var now_min = Math.floor(video.currentTime / 60);
+          var now_sec = Math.floor(video.currentTime) - now_min * 60;
+
+          if (end_sec < 10) {
+            end_sec = "0" + end_sec;
+          }
+          if (now_sec < 10) {
+            now_sec = "0" + now_sec;
+          }
+
+          t_end.innerText = end_min + ":" + end_sec;
+          t_now.innerText = now_min + ":" + now_sec;
         }
 
         video.addEventListener("timeupdate", updateProgress, false);
