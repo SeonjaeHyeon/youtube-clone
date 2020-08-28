@@ -26,11 +26,24 @@
   #back_progress {
     height: 3px;
     background: #DDD;
+    display: flex;
   }
 
   #progress {
     background-color:#FF0000;
     height:3px;
+  }
+
+  #prog_thumb {
+    background-color:#FF0000;
+    border-radius: 50%;
+    position: relative;
+    right: 5.5px;
+    bottom: 3px;
+    height: 12px;
+    width: 12px;
+    transition: transform .1s;
+    transform: scale(0);
   }
 
   #back_progress:hover {
@@ -39,8 +52,12 @@
     height: 5px;
   }
 
-  #back_progress:hover div {
+  #back_progress:hover #progress {
     height: 5px;
+  }
+
+  #back_progress:hover #prog_thumb {
+    transform: none;
   }
 
   #volume_slider {
