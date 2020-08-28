@@ -10,7 +10,7 @@
 <body style="margin: 0px;">
   <div id="first" style="float: left; padding-left: 98px; padding-right: 98px; padding-top: 18px;">
     <div id="video_container">
-      <video id="video" width="1280" height="720" autoplay>
+      <video id="video" width="1280" height="720" autoplay onclick="togglePlayPause()" ondblclick="fullscreen.click()">
         <source src="/static/{{video.path}}" type="video/mp4">
       Your browser does not support the video tag.
       </video>
