@@ -43,6 +43,15 @@
     height: 5px;
   }
 
+  #volume_slider {
+    display: inline-block;
+    width: 0px;
+    overflow: hidden;
+    transition: .2s;
+    position: relative;
+    bottom: -3px;
+  }
+
   #volume {
     -webkit-appearance: none;
     background-color: transparent;
@@ -50,8 +59,7 @@
     bottom: 3px;
     background: linear-gradient(to right, #FFF 50%,  transparent 50%);
     height: 3px;
-    width: 0px;
-    transition: .5s;
+    width: 52px;
   }
 
   #volume:focus {
@@ -62,7 +70,7 @@
     -webkit-appearance: none;
     background: #FFF;
     height: 12px;
-    width: 0px;
+    width: 12px;
     position: relative;
     bottom: -1px;
     border-radius: 50%;
