@@ -147,10 +147,21 @@
 
         video.addEventListener("timeupdate", updateProgress, false);
 
-        progressBar.addEventListener("click", function(event) {
-          var x = event.offsetX;
-          var bx = this.offsetWidth;
-          video.currentTime = video.duration * x / bx;
+        progressBar.addEventListener("mouseup", function(event) {
+          if (isDown) {
+            prog_thumb.style.position = "relative";
+            prog_thumb.style.left = null;
+            prog_thumb.style.bottom = "3px";
+            mouseClient = 0;
+            offset = 0;
+            isDown = false;
+            video.play();
+          }
+          else {
+            var x = event.offsetX;
+            var bx = this.offsetWidth;
+            video.currentTime = video.duration * x / bx;
+          }
         });
 
         fullscreen.addEventListener("click", function() {
@@ -176,21 +187,48 @@
           }
         }
 
-        $(function() {
-          $('#prog_thumb').draggable({
-            "axis": "x",
-            drag: function(event, ui) {
-              video.pause();
-              var x = event.offsetX;
-              var bx = progressBar.offsetWidth;
-              video.currentTime = video.duration * x / bx;
-            },
-            stop: function(event, ui) {
-              video.play();
-            },
-            containment: "progressBar"
-          });
-        });
+        var mouseClient = 0;
+        var mouseOffset = 0;
+        var offset = 0
+        var isDown = false;
+
+        prog_thumb.addEventListener('mousedown', function(e) {
+          isDown = true;
+          offset = prog_thumb.offsetLeft - e.clientX;
+          video.pause();
+        }, true);
+
+        /*
+        document.addEventListener('mouseup', function() {
+          if (isDown) {
+            prog_thumb.style.position = "relative";
+            prog_thumb.style.left = null;
+            prog_thumb.style.bottom = "3px";
+            mouseClient = 0;
+            offset = 0;
+            isDown = false;
+            video.play();
+          }
+        }, true);
+        */
+
+        progressBar.addEventListener('mousemove', function(event) {
+          event.preventDefault();
+          if (isDown) {
+            mouseOffset = event.clientX - $(this).offset().left;
+            if (mouseOffset < 0 || mouseOffset > this.offsetWidth) {
+              return
+            }
+
+            mouseClient = event.clientX;
+            prog_thumb.style.position = "absolute";
+            prog_thumb.style.left = (mouseClient + offset) + "px";
+            prog_thumb.style.bottom = "-4px";
+
+            var bx = this.offsetWidth;
+            video.currentTime = video.duration * mouseOffset / bx;
+          }
+        }, true);
 
       </script>
     </div>
