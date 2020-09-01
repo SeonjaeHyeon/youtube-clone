@@ -1,6 +1,7 @@
   #video_container {
     position: relative;
     background-color: black;
+    z-index: 0;
   }
 
   #video_manage {
@@ -11,12 +12,28 @@
     padding: 10px;
     opacity: 0;
     transition: opacity .3s;
+    z-index: 2;
+  }
+
+  #video_gradient {
+    background: linear-gradient(transparent, black);
+    position: absolute;
+    width: 100%;
+    height: 400px;
+    top: 320px;
+    opacity: 0;
+    transition: opacity .3s;
+    z-index: 1;
   }
 
   #video_container:hover #video_manage {
     opacity: .9;
   }
-  
+
+  #video_container:hover #video_gradient {
+    opacity: .5;
+  }
+
   #progressBar {
     color:#FFF;
     height:10px;
