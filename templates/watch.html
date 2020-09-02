@@ -23,8 +23,12 @@
         </div>
         <div id="controls">
           <div class="left_controls">
-            <button id="playpause" title="play" onclick="togglePlayPause()">►</button>
-            <button id="mute" title="unmuted" onclick="toggleMute()">&#128266;</button>
+            <div id="playpause" title="play" onclick="togglePlayPause()">
+              <i id="pp_icon" class="fas fa-play"></i>
+            </div>
+            <div id="mute" title="unmuted" onclick="toggleMute()">
+              <i id="mt_icon" class="fas fa-volume-down"></i>
+            </div>
             <div id="volume_slider">
               <input id="volume" value="50" type="range" onchange="setVolume()">
             </div>
@@ -47,12 +51,12 @@
           var playpause = document.getElementById("playpause");
           if (video.paused || video.ended) {
             playpause.title = "pause";
-            playpause.innerHTML = "❚ ❚";
+            $('#pp_icon').attr('class', 'fas fa-pause');
             video.play();
           }
           else {
             playpause.title = "play";
-            playpause.innerHTML = "►";
+            $('#pp_icon').attr('class', 'fas fa-play');
             video.pause();
           }
         }
@@ -60,19 +64,19 @@
         video.addEventListener('play', function() {
           var playpause = document.getElementById("playpause");
           playpause.title = "pause";
-          playpause.innerHTML = "❚ ❚";
+          $('#pp_icon').attr('class', 'fas fa-pause');
         }, false);
         video.addEventListener('pause', function() {
           var playpause = document.getElementById("playpause");
           playpause.title = "play";
-          playpause.innerHTML = "►";
+          $('#pp_icon').attr('class', 'fas fa-play');
         }, false);
         
         function toggleMute() {
           video.muted = !video.muted;
           if (video.muted) {
             mute.title = "muted"
-            mute.innerHTML = "&#128264;";
+            $('#mt_icon').attr('class', 'fas fa-volume-mute');
 
             var volume = document.getElementById("volume");
             volume.value = "0";
@@ -80,7 +84,7 @@
           }
           else {
             mute.title = "unmuted"
-            mute.innerHTML = "&#128266;";
+            $('#mt_icon').attr('class', 'fas fa-volume-down');
 
             var volume = document.getElementById("volume");
             volume.value = "50";
@@ -93,11 +97,11 @@
 
           if (volume.value == 0) {
             mute.title = "muted"
-            mute.innerHTML = "&#128264;";
+            $('#mt_icon').attr('class', 'fas fa-volume-mute');
           }
           else if (volume.value > 0) {
             mute.title = "unmuted"
-            mute.innerHTML = "&#128266;";
+            $('#mt_icon').attr('class', 'fas fa-volume-down');
           }
 
           video.volume = volume.value / 100;
