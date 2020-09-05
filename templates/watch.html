@@ -234,6 +234,20 @@
           }
         }, true);
 
+        document.addEventListener('keydown', function(e) {
+          var keyCode = e.keyCode;
+
+          if (keyCode == 32) { // Space Bar
+            togglePlayPause();
+          }
+          else if (keyCode == 37) { // Left Arrow
+            video.currentTime -= 5;
+          }
+          else if (keyCode == 39) { // Right Arrow
+            video.currentTime += 5;
+          }
+        }, false)
+
       </script>
     </div>
     <div>
