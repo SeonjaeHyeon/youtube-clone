@@ -2,6 +2,7 @@
 <head>
   <title>Playing Video</title>
   <script src="https://kit.fontawesome.com/ecb8a71d9f.js" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/8e283942cd.js"></script>
   <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/static/css/info-box.css">
   <link rel="stylesheet" type="text/css" href="/static/css/video-control.css">
@@ -46,6 +47,14 @@
         </div>
       </div>
       <div id="video_gradient" onclick="togglePlayPause()" ondblclick="fullscreen.click()"></div>
+      <div id="video_context_menu">
+        <div class="item" onclick="toggleLoop()">
+          <i class="fa fa-refresh"></i> 연속 재생
+        </div>
+        <div class="item" onclick="copyUrl()">
+          <i class="fas fa-link"></i> 동영상 URL 주소 복사
+        </div>
+      </div>
       <script>
         function togglePlayPause() {
           var playpause = document.getElementById("playpause");
@@ -246,7 +255,32 @@
           else if (keyCode == 39) { // Right Arrow
             video.currentTime += 5;
           }
-        }, false)
+        }, false);
+
+        video_container.addEventListener('contextmenu', function(event) {
+          event.preventDefault();
+          var contextElement = document.getElementById("video_context_menu");
+          contextElement.style.top = event.clientY + "px";
+          contextElement.style.left = event.clientX + "px";
+          contextElement.classList.add("active");
+        }, false);
+
+        window.addEventListener("click", function() {
+          document.getElementById("video_context_menu").classList.remove("active");
+        }, false);
+
+        function toggleLoop() {
+          video.loop = !video.loop;
+        }
+
+        function copyUrl() {
+          var temp = document.createElement("textarea");
+          document.body.appendChild(temp);
+          temp.value = window.location.href;
+          temp.select();
+          document.execCommand('copy');
+          document.body.removeChild(temp);
+        }
 
       </script>
     </div>
