@@ -245,6 +245,7 @@
 
         document.addEventListener('keydown', function(e) {
           var keyCode = e.keyCode;
+          var volume = document.getElementById("volume");
 
           if (keyCode == 32) { // Space Bar
             togglePlayPause();
@@ -252,8 +253,23 @@
           else if (keyCode == 37) { // Left Arrow
             video.currentTime -= 5;
           }
+          else if (keyCode == 38) { // Up Arrow
+            volume.value = Number(volume.value) + 5;
+            video.volume = volume.value / 100;
+          }
           else if (keyCode == 39) { // Right Arrow
             video.currentTime += 5;
+          }
+          else if (keyCode == 40) { // Down Arrow
+            volume.value -= 5;
+            video.volume = volume.value / 100;
+          }
+
+          if (volume.value > 50) {
+            volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%,  transparent " + (100 - volume.value) + "%)";
+          }
+          else {
+            volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
           }
         }, false);
 
