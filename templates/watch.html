@@ -51,8 +51,11 @@
         <div class="item" onclick="toggleLoop()">
           <i class="fa fa-refresh"></i> 연속 재생
         </div>
-        <div class="item" onclick="copyUrl()">
+        <div class="item" onclick="copyUrl(false)">
           <i class="fas fa-link"></i> 동영상 URL 주소 복사
+        </div>
+        <div class="item" onclick="copyUrl(true)">
+          <i class="fas fa-link"></i> 현재 시간에 동영상 URL 주소 복사
         </div>
       </div>
       <script>
@@ -298,10 +301,11 @@
           video.loop = !video.loop;
         }
 
-        function copyUrl() {
+        function copyUrl(isCurrent) {
           var temp = document.createElement("textarea");
+          var url = window.location.origin + window.location.pathname;
           document.body.appendChild(temp);
-          temp.value = window.location.href;
+          temp.value = isCurrent ? url + "?t=" + Math.floor(video.currentTime) : url;
           temp.select();
           document.execCommand('copy');
           document.body.removeChild(temp);

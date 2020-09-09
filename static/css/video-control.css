@@ -166,32 +166,32 @@
   }
 
   #video_context_menu {
-    position:fixed;
-    z-index:10000;
-    width:180px;
-    background:#1b1a1a;
-    border-radius:3px;
-    transform:scale(0);
-    transform-origin:top left;
+    position: fixed;
+    z-index: 10000;
+    width: 280px;
+    background: #1b1a1a;
+    border-radius: 3px;
+    transform: scale(0);
+    transform-origin: top left;
   }
 
   #video_context_menu.active {
-    transform:scale(1);
-    transition:transform 300ms ease-in-out;
+    transform: scale(1);
+    transition: transform 300ms ease-in-out;
   }
 
   #video_context_menu .item {
-    padding:8px 10px;
-    font-size:13px;
-    color:#eee;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: #eee;
     cursor: default;
   }
 
   #video_context_menu .item:hover {
-    background:#555;
+    background: #555;
   }
 
   #video_context_menu .item i {
-    display:inline-block;
-    margin-right:5px;
+    display: inline-block;
+    margin-right: 5px;
   }
