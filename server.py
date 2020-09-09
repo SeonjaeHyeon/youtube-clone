@@ -29,7 +29,9 @@ def watch(name=None):
     with open('db.json', 'w', encoding='utf-8') as f:
         json.dump(db, f, indent=4)
 
-    return render_template('watch.html', video=video)
+    time = int(request.args.get('t', 0))
+
+    return render_template('watch.html', video=video, time=time)
 
 @app.route('/rate')
 def rate():
