@@ -10,7 +10,7 @@
 </head>
 <body style="margin: 0px;">
   <div id="first" style="float: left; padding-left: 98px; padding-right: 98px; padding-top: 18px;">
-    <div id="video_container">
+    <div tabindex="-1" id="video_container" onclick="this.focus()">
       <video id="video" width="1280" height="720" autoplay onclick="togglePlayPause()" ondblclick="fullscreen.click()">
         <source src="/static/{{video.path}}" type="video/mp4">
       Your browser does not support the video tag.
@@ -265,14 +265,14 @@
           else if (keyCode == 37) { // Left Arrow
             video.currentTime -= 5;
           }
-          else if (keyCode == 38) { // Up Arrow
+          else if (keyCode == 38 && document.activeElement === video_container) { // Up Arrow
             volume.value = Number(volume.value) + 5;
             video.volume = volume.value / 100;
           }
           else if (keyCode == 39) { // Right Arrow
             video.currentTime += 5;
           }
-          else if (keyCode == 40) { // Down Arrow
+          else if (keyCode == 40 && document.activeElement === video_container) { // Down Arrow
             volume.value -= 5;
             video.volume = volume.value / 100;
           }
