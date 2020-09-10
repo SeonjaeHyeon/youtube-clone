@@ -103,3 +103,24 @@
     float: right;
     cursor: pointer;    
   }
+
+  .p_checkbox {
+    float: left;
+    width: 105px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  #p_time {
+    border: none;
+    color: #DDD;
+    background-color: #FFF;
+    height: 23px;
+    font-size: 15px;
+    position: relative;
+    bottom: 1px;
+  }
+
+  #p_time:focus {
+    outline: none;
+  }

@@ -432,18 +432,29 @@
         <input class="p_link" readonly size="45" onclick="this.select()">
       <div class="p_copy">복사</div>
       </div>
+      <p><hr style="border: 1px solid #DDD; margin-top: 20px; margin-bottom: 20px;"></p>
+      <div class="p_checkbox">
+        <input type="checkbox" id="p_start" style="float: left; margin-right: 10px; cursor: pointer">
+        <div onclick="p_start.click()">시작 시간: </div>
+      </div>
+      <input type="text" id="p_time" value="0:00" disabled>
     </div>
   </div>
   <script>
+    var p_url = window.location.origin + window.location.pathname;
+
     $('.share').on('click', function() {
       $('.p_dialog')[0].style.display = "block";
-      $('.p_link')[0].value = window.location.href;
+      $('.p_link')[0].value = p_url;
+      p_time.value = t_now.innerText;
     });
     $('.p_close').on('click', function() {
       $('.p_dialog')[0].style.display = "none";
     });
     window.onclick = function(event) {
       var dialog = document.getElementById('p_dialog');
+      var content = document.getElementsByClassName('p_content')[0];
+
       if (event.target == dialog) {
         $('.p_dialog')[0].style.display = "none";
       }
@@ -452,5 +463,23 @@
       $('.p_link')[0].select();
       document.execCommand("Copy");
     });
+
+    p_start.addEventListener('change', function() {
+      if (this.checked) {
+        $('#p_time').prop('disabled', false);
+        p_time.style.color = "#000";
+        $('.p_link')[0].value = p_url + "?t=" + Number(Number(p_time.value.split(':')[0]) * 60 + Number(p_time.value.split(':')[1]));
+      }
+      else {
+        $('#p_time').prop('disabled', true);
+        p_time.style.color = "#DDD";
+        $('.p_link')[0].value = p_url;
+      }
+    }, false);
+
+    p_time.addEventListener('blur', () => {
+      $('.p_link')[0].value = p_url + "?t=" + Number(Number(p_time.value.split(':')[0]) * 60 + Number(p_time.value.split(':')[1]));
+    }, false);
+
   </script>
 </body>
