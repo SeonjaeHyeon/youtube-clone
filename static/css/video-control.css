@@ -4,6 +4,10 @@
     z-index: 0;
   }
 
+  #video_container:focus {
+    outline: none;
+  }
+
   #video_manage {
     position: absolute;
     bottom: 0;
