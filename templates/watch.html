@@ -259,6 +259,10 @@
           var keyCode = e.keyCode;
           var volume = document.getElementById("volume");
 
+          if ($('.p_dialog')[0].style.display == "block") {
+            return;
+          } 
+
           if (keyCode == 32) { // Space Bar
             togglePlayPause();
           }
