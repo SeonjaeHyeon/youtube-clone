@@ -40,6 +40,9 @@
             </div>
           </div>
           <div class="right_controls">
+            <div id="setting">
+              <i id="st_icon" class="fas fa-cog"></i>
+            </div>
             <div id="fullscreen">
               <i id="fs_icon" class="fas fa-expand"></i>
             </div>
@@ -56,6 +59,11 @@
         </div>
         <div class="item" onclick="copyUrl(true)">
           <i class="fas fa-link"></i> 현재 시간에 동영상 URL 주소 복사
+        </div>
+      </div>
+      <div id="video_setting_menu">
+        <div class="item">
+          재생속도
         </div>
       </div>
       <script>
@@ -189,6 +197,23 @@
           }
         });
 
+        var isSetting = false;
+        setting.addEventListener("click", () => {
+          isSetting = !isSetting;
+          if (isSetting) {
+            $('#st_icon').addClass('st_active');
+
+            var settingElement = document.getElementById("video_setting_menu");
+            settingElement.style.top = $('#video_manage').offset().top - 40 + "px";
+            settingElement.style.left = $('#video_manage').offset().left + 1070 + "px";
+            settingElement.classList.add("active");
+          }
+          else {
+            $('#st_icon').removeClass('st_active');
+            document.getElementById("video_setting_menu").classList.remove("active");
+          }
+        }, false);
+
         fullscreen.addEventListener("click", function() {
           if (document.fullscreenElement == null) {
             video_container.webkitRequestFullscreen();
@@ -297,8 +322,15 @@
           contextElement.classList.add("active");
         }, false);
 
-        window.addEventListener("click", function() {
+        window.addEventListener("click", function(event) {
           document.getElementById("video_context_menu").classList.remove("active");
+          if (event.target !== st_icon){
+            if ($('#st_icon').hasClass('st_active')) {
+              isSetting = !isSetting;
+              $('#st_icon').removeClass('st_active');
+              document.getElementById("video_setting_menu").classList.remove("active");
+            }
+          }
         }, false);
 
         function toggleLoop() {

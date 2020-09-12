@@ -169,6 +169,27 @@
     cursor: pointer;
   }
 
+  .right_controls div {
+    display: inline-block;
+  }
+
+  #setting {
+    padding-right: 5px;
+    transition: .3s;
+  }
+
+  #st_icon {
+    transition: .3s;
+  }
+
+  #fullscreen {
+    padding-left: 5px;
+  }
+
+  .st_active {
+    transform: rotate(60deg);
+  }
+
   #video_context_menu {
     position: fixed;
     z-index: 10000;
@@ -184,18 +205,36 @@
     transition: transform 300ms ease-in-out;
   }
 
-  #video_context_menu .item {
+  #video_context_menu .item,
+  #video_setting_menu .item {
     padding: 8px 10px;
     font-size: 13px;
     color: #eee;
     cursor: default;
   }
 
-  #video_context_menu .item:hover {
+  #video_context_menu .item:hover,
+  #video_setting_menu .item:hover {
     background: #555;
   }
 
   #video_context_menu .item i {
     display: inline-block;
     margin-right: 5px;
+  }
+
+  #video_setting_menu {
+    position: fixed;
+    z-index: 9999;
+    width: 200px;
+    background: #1b1a1a;
+    border-radius: 3px;
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  #video_setting_menu.active {
+    transform: scale(1);
+    opacity: 1;
+    transition: opacity .3s;
   }
