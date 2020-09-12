@@ -145,6 +145,26 @@
           }
         }, false);
 
+        volume.addEventListener("mousewheel", (e) => {
+          e.preventDefault();
+
+          if (e.wheelDeltaY > 0) {
+            volume.value = Number(volume.value) + 5;
+            video.volume = volume.value / 100;
+          }
+          else {
+            volume.value -= 5;
+            video.volume = volume.value / 100;
+          }
+
+          if (volume.value > 50) {
+            volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%,  transparent " + (100 - volume.value) + "%)";
+          }
+          else {
+            volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
+          }
+        }, false);
+
         mute.addEventListener("mouseover", function() {
           volume_slider.style.width = "52px";
         }, false);
