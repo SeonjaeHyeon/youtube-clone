@@ -24,10 +24,10 @@
         </div>
         <div id="controls">
           <div class="left_controls">
-            <div id="playpause" title="play" onclick="togglePlayPause()">
+            <div id="playpause" title="재생(k)" onclick="togglePlayPause()">
               <i id="pp_icon" class="fas fa-play"></i>
             </div>
-            <div id="mute" title="unmuted" onclick="toggleMute()">
+            <div id="mute" title="음소거(m)" onclick="toggleMute()">
               <i id="mt_icon" class="fas fa-volume-down"></i>
             </div>
             <div id="volume_slider">
@@ -40,10 +40,10 @@
             </div>
           </div>
           <div class="right_controls">
-            <div id="setting">
+            <div id="setting" title="설정">
               <i id="st_icon" class="fas fa-cog"></i>
             </div>
-            <div id="fullscreen">
+            <div id="fullscreen" title="전체화면(f)">
               <i id="fs_icon" class="fas fa-expand"></i>
             </div>
           </div>
@@ -79,12 +79,12 @@
         function togglePlayPause() {
           var playpause = document.getElementById("playpause");
           if (video.paused || video.ended) {
-            playpause.title = "pause";
+            playpause.title = "일시중지(k)";
             $('#pp_icon').attr('class', 'fas fa-pause');
             video.play();
           }
           else {
-            playpause.title = "play";
+            playpause.title = "재생(k)";
             $('#pp_icon').attr('class', 'fas fa-play');
             video.pause();
           }
@@ -92,10 +92,10 @@
 
         video.addEventListener('play', function() {
           var playpause = document.getElementById("playpause");
-          playpause.title = "pause";
+          playpause.title = "일시중지(k)";
           $('#pp_icon').attr('class', 'fas fa-pause');
         }, false);
-        video.addEventListener('pause', function() {
+        video.addEventListener('재생(k)', function() {
           var playpause = document.getElementById("playpause");
           playpause.title = "play";
           $('#pp_icon').attr('class', 'fas fa-play');
@@ -104,7 +104,7 @@
         function toggleMute() {
           video.muted = !video.muted;
           if (video.muted) {
-            mute.title = "muted"
+            mute.title = "음소거 해제(m)"
             $('#mt_icon').attr('class', 'fas fa-volume-mute');
 
             var volume = document.getElementById("volume");
@@ -112,7 +112,7 @@
             $('#volume').css("background", "transparent");
           }
           else {
-            mute.title = "unmuted"
+            mute.title = "음소거(m)"
             $('#mt_icon').attr('class', 'fas fa-volume-down');
 
             var volume = document.getElementById("volume");
@@ -125,11 +125,11 @@
           var volume = document.getElementById("volume");
 
           if (volume.value == 0) {
-            mute.title = "muted"
+            mute.title = "음소거 해제(m)"
             $('#mt_icon').attr('class', 'fas fa-volume-mute');
           }
           else if (volume.value > 0) {
-            mute.title = "unmuted"
+            mute.title = "음소거(m)"
             $('#mt_icon').attr('class', 'fas fa-volume-down');
           }
 
@@ -238,12 +238,14 @@
           if (document.fullscreenElement == null) {
             video_container.webkitRequestFullscreen();
             $('#fs_icon').attr('class', 'fas fa-compress');
+            fullscreen.title = "전체화면 종료(f)";
             video.width = screen.width;
             video.height = screen.height;
           }
           else {
             document.exitFullscreen();
             $('#fs_icon').attr('class', 'fas fa-expand');
+            fullscreen.title = "전체화면(f)";
             video.width = "1280";
             video.height = "720";
           }
@@ -252,6 +254,7 @@
         document.onwebkitfullscreenchange = function() {
           if (document.fullscreenElement == null) {
             $('#fs_icon').attr('class', 'fas fa-expand');
+            fullscreen.title = "전체화면(f)";
             video.width = "1280";
             video.height = "720";
           }
@@ -324,6 +327,15 @@
           else if (keyCode == 40 && document.activeElement === video_container) { // Down Arrow
             volume.value -= 5;
             video.volume = volume.value / 100;
+          }
+          else if (keyCode == 70) { // F key
+            fullscreen.click();
+          }
+          else if (keyCode == 75) { // K key
+            togglePlayPause();
+          }
+          else if (keyCode == 77) { // M key
+            toggleMute();
           }
 
           if (volume.value > 50) {
