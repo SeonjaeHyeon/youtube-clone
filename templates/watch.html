@@ -163,6 +163,8 @@
           else {
             volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
           }
+
+          setVolume();
         }, false);
 
         mute.addEventListener("mouseover", function() {
@@ -344,6 +346,8 @@
           else {
             volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
           }
+
+          setVolume();
         }, false);
 
         video_container.addEventListener('contextmenu', function(event) {
