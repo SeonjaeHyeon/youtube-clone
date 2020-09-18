@@ -24,7 +24,6 @@ def watch(name=None):
         db = json.load(f)
 
     video = db[name]
-    db[name]['views'] += 1
 
     with open('db.json', 'w', encoding='utf-8') as f:
         json.dump(db, f, indent=4)
@@ -60,6 +59,25 @@ def rate():
             elif param['mode'] == 'change':
                 db[param['name']]['rate']['dislike'] += 1
                 db[param['name']]['rate']['like'] -= 1
+
+        with open('db.json', 'w', encoding='utf-8') as f:
+            json.dump(db, f, indent=4)
+    except:
+        return json.dumps({'message':'failed'})
+    
+    return json.dumps({'message':'success'})
+
+@app.route('/view')
+def view():
+    try:
+        if request.method != 'GET':
+            return 'Wrong request method.'
+
+        with open('db.json', 'r', encoding='utf-8') as f:
+            db = json.load(f)
+
+        param = request.args.to_dict()
+        db[param['name']]['views'] += 1
 
         with open('db.json', 'w', encoding='utf-8') as f:
             json.dump(db, f, indent=4)

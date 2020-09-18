@@ -67,6 +67,18 @@
         </div>
       </div>
       <script>
+        $(document).ready(() => {
+          setTimeout("viewCount()", 30000);
+        });
+
+        function viewCount() {
+          $.get({
+              url: '/view',
+              type: 'GET',
+              data: {'name': window.location.pathname.split('/')[2]}
+            });
+        }
+
         video.addEventListener('canplaythrough', function() {
           var time = "{{time}}";
           if (time > 0) {
