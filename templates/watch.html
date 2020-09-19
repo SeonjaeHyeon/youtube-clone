@@ -67,10 +67,6 @@
         </div>
       </div>
       <script>
-        $(document).ready(() => {
-          setTimeout("viewCount()", 30000);
-        });
-
         function viewCount() {
           $.get({
               url: '/view',
@@ -86,6 +82,13 @@
           }
 
           this.removeEventListener('canplaythrough', arguments.callee);
+
+          if (video.duration < 30) {
+            setTimeout("viewCount()", video.duration * 1000);
+          }
+          else {
+            setTimeout("viewCount()", 30000);
+          }
         }, false);
 
         function togglePlayPause() {
