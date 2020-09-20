@@ -74,6 +74,28 @@
               data: {'name': window.location.pathname.split('/')[2]}
             });
         }
+        
+        var playedTime = 0;
+        function countTime() {
+          if (video.duration < 30 && playedTime == Math.floor(video.duration)) {
+            clearTimeout(timerId);
+            viewCount();
+
+            return
+          }
+          else if (playedTime == 30) {
+            clearTimeout(timerId);
+            viewCount();
+
+            return
+          }
+          
+          if (!video.paused && !video.ended) {
+            playedTime += 1;
+          }
+          console.log(playedTime);
+          timerId = setTimeout(countTime, 1000);
+        }
 
         video.addEventListener('canplaythrough', function() {
           var time = "{{time}}";
@@ -83,12 +105,7 @@
 
           this.removeEventListener('canplaythrough', arguments.callee);
 
-          if (video.duration < 30) {
-            setTimeout("viewCount()", video.duration * 1000);
-          }
-          else {
-            setTimeout("viewCount()", 30000);
-          }
+          countTime();
         }, false);
 
         function togglePlayPause() {
