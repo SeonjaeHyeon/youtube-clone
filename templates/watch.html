@@ -93,7 +93,6 @@
           if (!video.paused && !video.ended) {
             playedTime += 1;
           }
-          console.log(playedTime);
           timerId = setTimeout(countTime, 1000);
         }
 
@@ -149,7 +148,7 @@
 
             var volume = document.getElementById("volume");
             volume.value = "50";
-            $('#volume').css("background", "linear-gradient(to right, #FFF 50%,  transparent 50%)");
+            $('#volume').css("background", "linear-gradient(to right, #FFF 50%, transparent 50%)");
           }
         }
 
@@ -170,7 +169,7 @@
 
         volume.addEventListener("input", function() {
           if (this.value > 50) {
-            $(this).css("background", "linear-gradient(to right, #FFF " + this.value + "%,  transparent " + (100 - this.value) + "%)");
+            $(this).css("background", "linear-gradient(to right, #FFF " + this.value + "%, transparent " + (100 - this.value) + "%)");
           }
           else {
             $(this).css("background", "linear-gradient(to left, transparent " + (100 - this.value) + "%, #FFF " + this.value + "%)");
@@ -190,7 +189,7 @@
           }
 
           if (volume.value > 50) {
-            volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%,  transparent " + (100 - volume.value) + "%)";
+            volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%, transparent " + (100 - volume.value) + "%)";
           }
           else {
             volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
@@ -305,20 +304,6 @@
           video.pause();
         }, true);
 
-        /*
-        document.addEventListener('mouseup', function() {
-          if (isDown) {
-            prog_thumb.style.position = "relative";
-            prog_thumb.style.left = null;
-            prog_thumb.style.bottom = "3px";
-            mouseClient = 0;
-            offset = 0;
-            isDown = false;
-            video.play();
-          }
-        }, true);
-        */
-
         progressBar.addEventListener('mousemove', function(event) {
           event.preventDefault();
           if (isDown) {
@@ -373,7 +358,7 @@
           }
 
           if (volume.value > 50) {
-            volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%,  transparent " + (100 - volume.value) + "%)";
+            volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%, transparent " + (100 - volume.value) + "%)";
           }
           else {
             volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
