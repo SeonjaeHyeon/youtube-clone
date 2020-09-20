@@ -1,5 +1,7 @@
 # youtube-clone
-Build a YouTube Clone with Python 3 and Flask
+Build a YouTube Clone with Python 3 and Flask  
+
+Still working on.. Images will be added when cloning is completed.  
 
 ## Requirements
 > Flask v1.1+ (tested on 1.1.2)  
