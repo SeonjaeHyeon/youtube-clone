@@ -233,6 +233,22 @@
 
         video.addEventListener("timeupdate", updateProgress, false);
 
+        var timeout;
+        video_container.addEventListener("mousemove", () => {
+          var manage = document.getElementById("video_manage");
+          manage.style.opacity = ".9";
+
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            manage.style.opacity = "";
+          }, 3000);
+        });
+
+        video_container.addEventListener("mouseleave", () => {
+          var manage = document.getElementById("video_manage");
+          manage.style.opacity = "";
+        });
+
         progressBar.addEventListener("mouseup", function(event) {
           if (isDown) {
             prog_thumb.style.position = "relative";

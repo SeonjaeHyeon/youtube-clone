@@ -31,10 +31,6 @@
     z-index: 1;
   }
 
-  #video_container:hover #video_manage {
-    opacity: .9;
-  }
-
   #video_container:hover #video_gradient {
     opacity: .5;
   }
