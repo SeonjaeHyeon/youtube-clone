@@ -236,17 +236,22 @@
         var timeout;
         video_container.addEventListener("mousemove", () => {
           var manage = document.getElementById("video_manage");
+          var gradient = document.getElementById("video_gradient");
           manage.style.opacity = ".9";
+          gradient.style.opacity = ".5";
 
           clearTimeout(timeout);
           timeout = setTimeout(() => {
             manage.style.opacity = "";
+            gradient.style.opacity = "";
           }, 3000);
         });
 
         video_container.addEventListener("mouseleave", () => {
           var manage = document.getElementById("video_manage");
+          var gradient = document.getElementById("video_gradient");
           manage.style.opacity = "";
+          gradient.style.opacity = "";
         });
 
         progressBar.addEventListener("mouseup", function(event) {

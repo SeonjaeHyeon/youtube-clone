@@ -31,10 +31,6 @@
     z-index: 1;
   }
 
-  #video_container:hover #video_gradient {
-    opacity: .5;
-  }
-
   #progressBar {
     color:#FFF;
     height:10px;
