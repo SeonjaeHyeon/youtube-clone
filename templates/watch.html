@@ -6,10 +6,11 @@
   <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/static/css/info-box.css">
   <link rel="stylesheet" type="text/css" href="/static/css/video-control.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/second-container.css">
   </script>
 </head>
 <body style="margin: 0px;">
-  <div id="first" style="float: left; padding-left: 98px; padding-right: 98px; padding-top: 18px;">
+  <div id="first" style="float: left; padding-left: 98px; padding-right: 25px; padding-top: 18px;">
     <div tabindex="-1" id="video_container" onclick="this.focus()">
       <video id="video" width="1280" height="720" autoplay onclick="togglePlayPause()" ondblclick="fullscreen.click()">
         <source src="/static/{{video.path}}" type="video/mp4">
@@ -531,8 +532,21 @@
     </div>
     
   </div>
-  <div id="second">
-
+  <div id="second" style="padding-top: 18px;">
+    <div id="next_container" style="padding-top: 10px;">
+      <span>다음 동영상</span><p>
+      <a href="#" onclick="javascript:nextVideo();" style="text-decoration: none;">
+        <img src="/static/{{next_video.data.thumnail}}" style="float: left;">
+        <span class="next_span next_title">{{next_video.data.title}}</span>
+      </a>
+      <br>
+      <span class="next_span">조회수 {{next_video.data.views}}회 • {{next_video.data.date}}</span>
+    </div>
+    <script>
+      function nextVideo() {
+        window.location.href = "/watch/{{next_video.name}}";
+      }
+    </script>
   </div>
   <div id="p_dialog" class="p_dialog">
     <div class="p_content">

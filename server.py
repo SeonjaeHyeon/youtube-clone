@@ -25,12 +25,20 @@ def watch(name=None):
 
     video = db[name]
 
+    db_list = [{"name": k, "data": v} for k, v in db.items()]
+    for i, j in enumerate(db_list):
+        if j.get("name") == name:
+            if i + 1 == len(db_list):
+                next_video = db_list[0]
+            else:
+                next_video = db_list[i + 1]
+
     with open('db.json', 'w', encoding='utf-8') as f:
         json.dump(db, f, indent=4)
 
     time = int(request.args.get('t', 0))
 
-    return render_template('watch.html', video=video, time=time)
+    return render_template('watch.html', video=video, time=time, next_video=next_video)
 
 @app.route('/rate')
 def rate():

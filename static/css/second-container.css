@@ -1,0 +1,16 @@
+#second img {
+    width: 168px;
+    height: 94;
+}
+
+.next_span {
+    color: #808080;
+    font-size: 13px;
+    padding-left: 8px;
+}
+
+.next_title {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}
