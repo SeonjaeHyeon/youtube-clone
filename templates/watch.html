@@ -12,7 +12,7 @@
 <body style="margin: 0px;">
   <div id="first" style="float: left; padding-left: 98px; padding-right: 25px; padding-top: 18px;">
     <div tabindex="-1" id="video_container" onclick="this.focus()">
-      <video id="video" width="1280" height="720" autoplay onclick="togglePlayPause()" ondblclick="fullscreen.click()">
+      <video id="video" width="1280" height="720" autoplay onclick="togglePlayPause()" ondblclick="fullscreen.click()" onended="resetButton()">
         <source src="/static/{{video.path}}" type="video/mp4">
       Your browser does not support the video tag.
       </video>
@@ -120,6 +120,12 @@
             $('#pp_icon').attr('class', 'fas fa-play');
             video.pause();
           }
+        }
+
+        function resetButton() {
+          var playpause = document.getElementById("playpause");
+          playpause.title = "재생(k)";
+          $('#pp_icon').attr('class', 'fas fa-play');
         }
 
         video.addEventListener('play', function() {
