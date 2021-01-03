@@ -20,5 +20,38 @@
             "like": 0,
             "dislike": 0
         }
+    },
+    "coffee_bean": {
+        "path": "videos/coffee_bean.mp4",
+        "thumnail": "thumnails/coffee_bean.jpg",
+        "title": "\ucee4\ud53c\ucf69\uc774 \ub5a8\uc5b4\uc9c0\ub294 \uc601\uc0c1",
+        "views": 0,
+        "date": "2021.01.03",
+        "rate": {
+            "like": 0,
+            "dislike": 0
+        }
+    },
+    "eiffel_tower": {
+        "path": "videos/eiffel_tower.mp4",
+        "thumnail": "thumnails/eiffel_tower.jpg",
+        "title": "\uc5d0\ud3a0\ud0d1",
+        "views": 0,
+        "date": "2021.01.03",
+        "rate": {
+            "like": 0,
+            "dislike": 0
+        }
+    },
+    "water_out_plant": {
+        "path": "videos/water_out_plant.mp4",
+        "thumnail": "thumnails/water_out_plant.jpg",
+        "title": "\uc2dd\ubb3c\uc5d0 \ubb3c \uc8fc\ub294 \uc601\uc0c1",
+        "views": 0,
+        "date": "2021.01.03",
+        "rate": {
+            "like": 0,
+            "dislike": 0
+        }
     }
 }
