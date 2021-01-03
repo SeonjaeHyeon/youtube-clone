@@ -2,15 +2,24 @@
 <html>
   <head>
     <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
   </head>
   <body>
-    <h1>Select one which you want to see!</h1>
-    <div>
+    <h1>YouTube</h1>
+    <div class="grid_container">
       {% for name, video in db.items() %}
-      <a href="/watch/{{name}}">
-        <img src="/static/{{video.thumnail}}">
-        <p>{{video.title}}</p>
-      </a>
+      <div class="grid_item">
+        <a href="/watch/{{name}}">
+          <img src="/static/{{video.thumnail}}">
+          <div style="padding-left: 3px;">
+            <div style="font-size: 17px;">{{video.title}}</div>
+            <div style="display: flex; padding-top: 3px; color: #808080; font-size: 14px;">
+              <div style="display: inline-block; padding-right: 5px;">조회수 {{video.views}}회</div>
+              <div style="display: inline-block;">• {{video.date}}</div>
+            </div>
+          </div>
+        </a>
+      </div>
       {% endfor %}
     </div>
   </body>

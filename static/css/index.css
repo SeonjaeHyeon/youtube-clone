@@ -1,0 +1,23 @@
+.grid_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(auto, 360px));
+    grid-auto-rows: minmax(auto, 280px);
+    row-gap: 20px;
+    column-gap: 15px;
+    justify-items: center;
+    justify-content: space-around;
+    padding-top: 15px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.grid_item img {
+    width: 360px;
+    height: 200px;
+}
+
+.grid_item a {
+    display: block;
+    text-decoration: none;
+    color: black;
+}
