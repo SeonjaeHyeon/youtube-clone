@@ -40,6 +40,34 @@ def watch(name=None):
 
     return render_template('watch.html', video=video, time=time, next_video=next_video)
 
+@app.route('/results', methods=['POST'])
+def results():
+    try:
+        if request.method != 'POST':
+            return 'Wrong request method.'
+
+        with open('db.json', 'r', encoding='utf-8') as f:
+            db = json.load(f)
+
+        params = request.json
+        keyword = params.get('keyword')
+
+        if keyword is not None and keyword != '':
+            result = {}
+
+            for key, value in db.items():
+                title = value.get('title')
+
+                if keyword in title:
+                    result[key] = title
+
+        if result == {}:
+            return json.dumps({'message': 'success', 'has_result': False})
+    except:
+        return json.dumps({'message': 'failed'})
+
+    return json.dumps({'message': 'success', 'has_result': True, 'result': result})
+
 @app.route('/rate')
 def rate():
     try:
@@ -72,7 +100,7 @@ def rate():
             json.dump(db, f, indent=4)
     except:
         return json.dumps({'message':'failed'})
-    
+
     return json.dumps({'message':'success'})
 
 @app.route('/view')
@@ -91,5 +119,5 @@ def view():
             json.dump(db, f, indent=4)
     except:
         return json.dumps({'message':'failed'})
-    
+
     return json.dumps({'message':'success'})
