@@ -68,3 +68,7 @@
 #bar_third {
     width: 225px;
 }
+
+#main {
+    display: flex;
+}

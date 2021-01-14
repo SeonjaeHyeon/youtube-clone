@@ -105,549 +105,551 @@
 
     </script>
   </div>
-  <div id="first" style="float: left; padding-left: 90px; padding-right: 25px;">
-    <div tabindex="-1" id="video_container" onclick="this.focus()">
-      <video id="video" width="1280" height="720" autoplay onclick="togglePlayPause()" ondblclick="fullscreen.click()" onended="replayButton()">
-        <source src="/static/{{video.path}}" type="video/mp4">
-      Your browser does not support the video tag.
-      </video>
-      <div id="video_manage">
-        <div id="progressBar">
-          <div id="back_progress">
-            <div id="progress"></div>
-            <div id="prog_thumb"></div>
-          </div>
-        </div>
-        <div id="controls">
-          <div class="left_controls">
-            <div id="playpause" title="재생(k)" onclick="togglePlayPause()">
-              <i id="pp_icon" class="fas fa-play"></i>
-            </div>
-            <div id="mute" title="음소거(m)" onclick="toggleMute()">
-              <i id="mt_icon" class="fas fa-volume-down"></i>
-            </div>
-            <div id="volume_slider">
-              <input id="volume" value="50" type="range" onchange="setVolume()">
-            </div>
-            <div id="time">
-              <span id="t_now">0:00</span>
-              <span id="t_slash">/</span>
-              <span id="t_end">0:00</span>
+  <div id="main">
+    <div id="first" style="padding-left: 90px; padding-right: 25px;">
+      <div tabindex="-1" id="video_container" onclick="this.focus()">
+        <video id="video" width="1280" height="720" autoplay onclick="togglePlayPause()" ondblclick="fullscreen.click()" onended="replayButton()">
+          <source src="/static/{{video.path}}" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>
+        <div id="video_manage">
+          <div id="progressBar">
+            <div id="back_progress">
+              <div id="progress"></div>
+              <div id="prog_thumb"></div>
             </div>
           </div>
-          <div class="right_controls">
-            <div id="setting" title="설정">
-              <i id="st_icon" class="fas fa-cog"></i>
+          <div id="controls">
+            <div class="left_controls">
+              <div id="playpause" title="재생(k)" onclick="togglePlayPause()">
+                <i id="pp_icon" class="fas fa-play"></i>
+              </div>
+              <div id="mute" title="음소거(m)" onclick="toggleMute()">
+                <i id="mt_icon" class="fas fa-volume-down"></i>
+              </div>
+              <div id="volume_slider">
+                <input id="volume" value="50" type="range" onchange="setVolume()">
+              </div>
+              <div id="time">
+                <span id="t_now">0:00</span>
+                <span id="t_slash">/</span>
+                <span id="t_end">0:00</span>
+              </div>
             </div>
-            <div id="fullscreen" title="전체화면(f)">
-              <i id="fs_icon" class="fas fa-expand"></i>
+            <div class="right_controls">
+              <div id="setting" title="설정">
+                <i id="st_icon" class="fas fa-cog"></i>
+              </div>
+              <div id="fullscreen" title="전체화면(f)">
+                <i id="fs_icon" class="fas fa-expand"></i>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div id="video_gradient" onclick="togglePlayPause()" ondblclick="fullscreen.click()"></div>
-      <div id="video_context_menu">
-        <div class="item" onclick="toggleLoop()">
-          <i class="fa fa-refresh"></i> 연속 재생
+        <div id="video_gradient" onclick="togglePlayPause()" ondblclick="fullscreen.click()"></div>
+        <div id="video_context_menu">
+          <div class="item" onclick="toggleLoop()">
+            <i class="fa fa-refresh"></i> 연속 재생
+          </div>
+          <div class="item" onclick="copyUrl(false)">
+            <i class="fas fa-link"></i> 동영상 URL 주소 복사
+          </div>
+          <div class="item" onclick="copyUrl(true)">
+            <i class="fas fa-link"></i> 현재 시간에 동영상 URL 주소 복사
+          </div>
         </div>
-        <div class="item" onclick="copyUrl(false)">
-          <i class="fas fa-link"></i> 동영상 URL 주소 복사
+        <div id="video_setting_menu">
+          <div class="item">
+            재생속도
+          </div>
         </div>
-        <div class="item" onclick="copyUrl(true)">
-          <i class="fas fa-link"></i> 현재 시간에 동영상 URL 주소 복사
-        </div>
-      </div>
-      <div id="video_setting_menu">
-        <div class="item">
-          재생속도
-        </div>
-      </div>
-      <script>
-        function viewCount() {
-          $.get({
-              url: '/view',
-              type: 'GET',
-              data: {'name': window.location.pathname.split('/')[2]}
-            });
-        }
-        
-        var playedTime = 0;
-        function countTime() {
-          if (video.duration < 30 && playedTime == Math.floor(video.duration)) {
-            clearTimeout(timerId);
-            viewCount();
-
-            return
-          }
-          else if (playedTime == 30) {
-            clearTimeout(timerId);
-            viewCount();
-
-            return
+        <script>
+          function viewCount() {
+            $.get({
+                url: '/view',
+                type: 'GET',
+                data: {'name': window.location.pathname.split('/')[2]}
+              });
           }
           
-          if (!video.paused && !video.ended) {
-            playedTime += 1;
-          }
-          timerId = setTimeout(countTime, 1000);
-        }
-
-        video.addEventListener('canplaythrough', function() {
-          var time = "{{time}}";
-          if (time > 0) {
-            video.currentTime = time;
-          }
-
-          this.removeEventListener('canplaythrough', arguments.callee);
-
-          countTime();
-        }, false);
-
-        function togglePlayPause() {
-          var playpause = document.getElementById("playpause");
-          if (video.paused || video.ended) {
-            playpause.title = "일시중지(k)";
-            $('#pp_icon').attr('class', 'fas fa-pause');
-            video.play();
-          }
-          else {
-            playpause.title = "재생(k)";
-            $('#pp_icon').attr('class', 'fas fa-play');
-            video.pause();
-          }
-        }
-
-        function replayButton() {
-          var playpause = document.getElementById("playpause");
-          playpause.title = "다시보기";
-          $('#pp_icon').attr('class', 'fas fa-undo');
-        }
-
-        video.addEventListener('play', function() {
-          var playpause = document.getElementById("playpause");
-          playpause.title = "일시중지(k)";
-          $('#pp_icon').attr('class', 'fas fa-pause');
-        }, false);
-        video.addEventListener('재생(k)', function() {
-          var playpause = document.getElementById("playpause");
-          playpause.title = "play";
-          $('#pp_icon').attr('class', 'fas fa-play');
-        }, false);
-        
-        function toggleMute() {
-          video.muted = !video.muted;
-          if (video.muted) {
-            mute.title = "음소거 해제(m)"
-            $('#mt_icon').attr('class', 'fas fa-volume-mute');
-
-            var volume = document.getElementById("volume");
-            volume.value = "0";
-            $('#volume').css("background", "transparent");
-          }
-          else {
-            mute.title = "음소거(m)"
-            $('#mt_icon').attr('class', 'fas fa-volume-down');
-
-            var volume = document.getElementById("volume");
-            volume.value = "50";
-            $('#volume').css("background", "linear-gradient(to right, #FFF 50%, transparent 50%)");
-          }
-        }
-
-        function setVolume() {
-          var volume = document.getElementById("volume");
-
-          if (volume.value == 0) {
-            mute.title = "음소거 해제(m)"
-            $('#mt_icon').attr('class', 'fas fa-volume-mute');
-          }
-          else if (volume.value > 0) {
-            mute.title = "음소거(m)"
-            $('#mt_icon').attr('class', 'fas fa-volume-down');
-          }
-
-          video.volume = volume.value / 100;
-        }
-
-        volume.addEventListener("input", function() {
-          if (this.value > 50) {
-            $(this).css("background", "linear-gradient(to right, #FFF " + this.value + "%, transparent " + (100 - this.value) + "%)");
-          }
-          else {
-            $(this).css("background", "linear-gradient(to left, transparent " + (100 - this.value) + "%, #FFF " + this.value + "%)");
-          }
-        }, false);
-
-        volume.addEventListener("mousewheel", (e) => {
-          e.preventDefault();
-
-          if (e.wheelDeltaY > 0) {
-            volume.value = Number(volume.value) + 5;
-            video.volume = volume.value / 100;
-          }
-          else {
-            volume.value -= 5;
-            video.volume = volume.value / 100;
-          }
-
-          if (volume.value > 50) {
-            volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%, transparent " + (100 - volume.value) + "%)";
-          }
-          else {
-            volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
-          }
-
-          setVolume();
-        }, false);
-
-        mute.addEventListener("mouseover", function() {
-          volume_slider.style.width = "52px";
-        }, false);
-
-        controls.addEventListener("mouseleave", function() {
-          volume_slider.style.width = "0px";
-        }, false);
-
-        function updateProgress() {
-          var progress = document.getElementById("progress");
-          var value = 0;
-          if (video.currentTime > 0) {
-            value = (100 / video.duration) * video.currentTime;
-            // value = value.toFixed(2);
-          }
-          progress.style.width = value + "%";
-
-          var end_min = Math.floor(video.duration / 60);
-          var end_sec = Math.floor(video.duration) - end_min * 60;
-          var now_min = Math.floor(video.currentTime / 60);
-          var now_sec = Math.floor(video.currentTime) - now_min * 60;
-
-          if (end_sec < 10) {
-            end_sec = "0" + end_sec;
-          }
-          if (now_sec < 10) {
-            now_sec = "0" + now_sec;
-          }
-
-          t_end.innerText = end_min + ":" + end_sec;
-          t_now.innerText = now_min + ":" + now_sec;
-        }
-
-        video.addEventListener("timeupdate", updateProgress, false);
-
-        var timeout;
-        video_container.addEventListener("mousemove", () => {
-          var manage = document.getElementById("video_manage");
-          var gradient = document.getElementById("video_gradient");
-          manage.style.opacity = ".9";
-          gradient.style.opacity = ".5";
-
-          clearTimeout(timeout);
-          timeout = setTimeout(() => {
-            manage.style.opacity = "";
-            gradient.style.opacity = "";
-          }, 3000);
-        });
-
-        video_container.addEventListener("mouseleave", () => {
-          var manage = document.getElementById("video_manage");
-          var gradient = document.getElementById("video_gradient");
-          manage.style.opacity = "";
-          gradient.style.opacity = "";
-        });
-
-        progressBar.addEventListener("mouseup", function(event) {
-          if (isDown) {
-            prog_thumb.style.position = "relative";
-            prog_thumb.style.left = null;
-            prog_thumb.style.bottom = "3px";
-            mouseClient = 0;
-            offset = 0;
-            isDown = false;
-            video.play();
-          }
-          else {
-            var x = event.offsetX;
-            var bx = this.offsetWidth;
-            video.currentTime = video.duration * x / bx;
-          }
-        });
-
-        var isSetting = false;
-        setting.addEventListener("click", () => {
-          isSetting = !isSetting;
-          if (isSetting) {
-            $('#st_icon').addClass('st_active');
-
-            var settingElement = document.getElementById("video_setting_menu");
-            settingElement.style.top = $('#video_manage').offset().top - 40 + "px";
-            settingElement.style.left = $('#video_manage').offset().left + 1070 + "px";
-            settingElement.classList.add("active");
-          }
-          else {
-            $('#st_icon').removeClass('st_active');
-            document.getElementById("video_setting_menu").classList.remove("active");
-          }
-        }, false);
-
-        fullscreen.addEventListener("click", function() {
-          if (document.fullscreenElement == null) {
-            video_container.webkitRequestFullscreen();
-            $('#fs_icon').attr('class', 'fas fa-compress');
-            fullscreen.title = "전체화면 종료(f)";
-            video.width = screen.width;
-            video.height = screen.height;
-          }
-          else {
-            document.exitFullscreen();
-            $('#fs_icon').attr('class', 'fas fa-expand');
-            fullscreen.title = "전체화면(f)";
-            video.width = "1280";
-            video.height = "720";
-          }
-        });
-
-        document.onwebkitfullscreenchange = function() {
-          if (document.fullscreenElement == null) {
-            $('#fs_icon').attr('class', 'fas fa-expand');
-            fullscreen.title = "전체화면(f)";
-            video.width = "1280";
-            video.height = "720";
-          }
-        }
-
-        var mouseClient = 0;
-        var mouseOffset = 0;
-        var offset = 0
-        var isDown = false;
-
-        prog_thumb.addEventListener('mousedown', function(e) {
-          isDown = true;
-          offset = prog_thumb.offsetLeft - e.clientX;
-          video.pause();
-        }, true);
-
-        progressBar.addEventListener('mousemove', function(event) {
-          event.preventDefault();
-          if (isDown) {
-            mouseOffset = event.clientX - $(this).offset().left;
-            if (mouseOffset < 0 || mouseOffset > this.offsetWidth) {
+          var playedTime = 0;
+          function countTime() {
+            if (video.duration < 30 && playedTime == Math.floor(video.duration)) {
+              clearTimeout(timerId);
+              viewCount();
+  
               return
             }
-
-            mouseClient = event.clientX;
-            prog_thumb.style.position = "absolute";
-            prog_thumb.style.left = (mouseClient + offset) + "px";
-            prog_thumb.style.bottom = "-4px";
-
-            var bx = this.offsetWidth;
-            video.currentTime = video.duration * mouseOffset / bx;
+            else if (playedTime == 30) {
+              clearTimeout(timerId);
+              viewCount();
+  
+              return
+            }
+            
+            if (!video.paused && !video.ended) {
+              playedTime += 1;
+            }
+            timerId = setTimeout(countTime, 1000);
           }
-        }, true);
-
-        document.addEventListener('keydown', function(e) {
-          var keyCode = e.keyCode;
-          var volume = document.getElementById("volume");
-
-          if ($('.p_dialog')[0].style.display == "block") {
-            return;
-          } 
-
-          if (keyCode == 32) { // Space Bar
-            togglePlayPause();
+  
+          video.addEventListener('canplaythrough', function() {
+            var time = "{{time}}";
+            if (time > 0) {
+              video.currentTime = time;
+            }
+  
+            this.removeEventListener('canplaythrough', arguments.callee);
+  
+            countTime();
+          }, false);
+  
+          function togglePlayPause() {
+            var playpause = document.getElementById("playpause");
+            if (video.paused || video.ended) {
+              playpause.title = "일시중지(k)";
+              $('#pp_icon').attr('class', 'fas fa-pause');
+              video.play();
+            }
+            else {
+              playpause.title = "재생(k)";
+              $('#pp_icon').attr('class', 'fas fa-play');
+              video.pause();
+            }
           }
-          else if (keyCode == 37) { // Left Arrow
-            video.currentTime -= 5;
+  
+          function replayButton() {
+            var playpause = document.getElementById("playpause");
+            playpause.title = "다시보기";
+            $('#pp_icon').attr('class', 'fas fa-undo');
           }
-          else if (keyCode == 38 && document.activeElement === video_container) { // Up Arrow
-            volume.value = Number(volume.value) + 5;
+  
+          video.addEventListener('play', function() {
+            var playpause = document.getElementById("playpause");
+            playpause.title = "일시중지(k)";
+            $('#pp_icon').attr('class', 'fas fa-pause');
+          }, false);
+          video.addEventListener('재생(k)', function() {
+            var playpause = document.getElementById("playpause");
+            playpause.title = "play";
+            $('#pp_icon').attr('class', 'fas fa-play');
+          }, false);
+          
+          function toggleMute() {
+            video.muted = !video.muted;
+            if (video.muted) {
+              mute.title = "음소거 해제(m)"
+              $('#mt_icon').attr('class', 'fas fa-volume-mute');
+  
+              var volume = document.getElementById("volume");
+              volume.value = "0";
+              $('#volume').css("background", "transparent");
+            }
+            else {
+              mute.title = "음소거(m)"
+              $('#mt_icon').attr('class', 'fas fa-volume-down');
+  
+              var volume = document.getElementById("volume");
+              volume.value = "50";
+              $('#volume').css("background", "linear-gradient(to right, #FFF 50%, transparent 50%)");
+            }
+          }
+  
+          function setVolume() {
+            var volume = document.getElementById("volume");
+  
+            if (volume.value == 0) {
+              mute.title = "음소거 해제(m)"
+              $('#mt_icon').attr('class', 'fas fa-volume-mute');
+            }
+            else if (volume.value > 0) {
+              mute.title = "음소거(m)"
+              $('#mt_icon').attr('class', 'fas fa-volume-down');
+            }
+  
             video.volume = volume.value / 100;
           }
-          else if (keyCode == 39) { // Right Arrow
-            video.currentTime += 5;
+  
+          volume.addEventListener("input", function() {
+            if (this.value > 50) {
+              $(this).css("background", "linear-gradient(to right, #FFF " + this.value + "%, transparent " + (100 - this.value) + "%)");
+            }
+            else {
+              $(this).css("background", "linear-gradient(to left, transparent " + (100 - this.value) + "%, #FFF " + this.value + "%)");
+            }
+          }, false);
+  
+          volume.addEventListener("mousewheel", (e) => {
+            e.preventDefault();
+  
+            if (e.wheelDeltaY > 0) {
+              volume.value = Number(volume.value) + 5;
+              video.volume = volume.value / 100;
+            }
+            else {
+              volume.value -= 5;
+              video.volume = volume.value / 100;
+            }
+  
+            if (volume.value > 50) {
+              volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%, transparent " + (100 - volume.value) + "%)";
+            }
+            else {
+              volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
+            }
+  
+            setVolume();
+          }, false);
+  
+          mute.addEventListener("mouseover", function() {
+            volume_slider.style.width = "52px";
+          }, false);
+  
+          controls.addEventListener("mouseleave", function() {
+            volume_slider.style.width = "0px";
+          }, false);
+  
+          function updateProgress() {
+            var progress = document.getElementById("progress");
+            var value = 0;
+            if (video.currentTime > 0) {
+              value = (100 / video.duration) * video.currentTime;
+              // value = value.toFixed(2);
+            }
+            progress.style.width = value + "%";
+  
+            var end_min = Math.floor(video.duration / 60);
+            var end_sec = Math.floor(video.duration) - end_min * 60;
+            var now_min = Math.floor(video.currentTime / 60);
+            var now_sec = Math.floor(video.currentTime) - now_min * 60;
+  
+            if (end_sec < 10) {
+              end_sec = "0" + end_sec;
+            }
+            if (now_sec < 10) {
+              now_sec = "0" + now_sec;
+            }
+  
+            t_end.innerText = end_min + ":" + end_sec;
+            t_now.innerText = now_min + ":" + now_sec;
           }
-          else if (keyCode == 40 && document.activeElement === video_container) { // Down Arrow
-            volume.value -= 5;
-            video.volume = volume.value / 100;
-          }
-          else if (keyCode == 70) { // F key
-            fullscreen.click();
-          }
-          else if (keyCode == 75) { // K key
-            togglePlayPause();
-          }
-          else if (keyCode == 77) { // M key
-            toggleMute();
-          }
-
-          if (volume.value > 50) {
-            volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%, transparent " + (100 - volume.value) + "%)";
-          }
-          else {
-            volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
-          }
-
-          setVolume();
-        }, false);
-
-        video_container.addEventListener('contextmenu', function(event) {
-          event.preventDefault();
-          var contextElement = document.getElementById("video_context_menu");
-          contextElement.style.top = event.clientY + "px";
-          contextElement.style.left = event.clientX + "px";
-          contextElement.classList.add("active");
-        }, false);
-
-        window.addEventListener("click", function(event) {
-          document.getElementById("video_context_menu").classList.remove("active");
-          if (event.target !== st_icon){
-            if ($('#st_icon').hasClass('st_active')) {
-              isSetting = !isSetting;
+  
+          video.addEventListener("timeupdate", updateProgress, false);
+  
+          var timeout;
+          video_container.addEventListener("mousemove", () => {
+            var manage = document.getElementById("video_manage");
+            var gradient = document.getElementById("video_gradient");
+            manage.style.opacity = ".9";
+            gradient.style.opacity = ".5";
+  
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+              manage.style.opacity = "";
+              gradient.style.opacity = "";
+            }, 3000);
+          });
+  
+          video_container.addEventListener("mouseleave", () => {
+            var manage = document.getElementById("video_manage");
+            var gradient = document.getElementById("video_gradient");
+            manage.style.opacity = "";
+            gradient.style.opacity = "";
+          });
+  
+          progressBar.addEventListener("mouseup", function(event) {
+            if (isDown) {
+              prog_thumb.style.position = "relative";
+              prog_thumb.style.left = null;
+              prog_thumb.style.bottom = "3px";
+              mouseClient = 0;
+              offset = 0;
+              isDown = false;
+              video.play();
+            }
+            else {
+              var x = event.offsetX;
+              var bx = this.offsetWidth;
+              video.currentTime = video.duration * x / bx;
+            }
+          });
+  
+          var isSetting = false;
+          setting.addEventListener("click", () => {
+            isSetting = !isSetting;
+            if (isSetting) {
+              $('#st_icon').addClass('st_active');
+  
+              var settingElement = document.getElementById("video_setting_menu");
+              settingElement.style.top = $('#video_manage').offset().top - 40 + "px";
+              settingElement.style.left = $('#video_manage').offset().left + 1070 + "px";
+              settingElement.classList.add("active");
+            }
+            else {
               $('#st_icon').removeClass('st_active');
               document.getElementById("video_setting_menu").classList.remove("active");
             }
-          }
-        }, false);
-
-        function toggleLoop() {
-          video.loop = !video.loop;
-        }
-
-        function copyUrl(isCurrent) {
-          var temp = document.createElement("textarea");
-          var url = window.location.origin + window.location.pathname;
-          document.body.appendChild(temp);
-          temp.value = isCurrent ? url + "?t=" + Math.floor(video.currentTime) : url;
-          temp.select();
-          document.execCommand('copy');
-          document.body.removeChild(temp);
-        }
-
-      </script>
-    </div>
-    <div>
-      {% if video.title %}
-      <h1 style="font-size: 18px; font-weight: normal;">{{video.title}}</h1>
-      {% else %}
-      <h1>A Random Video</h1>
-      {% endif %}
-      <div id="info" style="color: #808080; display: flex; border-bottom: 1px solid #ddd;">
-        <div id="text" style="height: auto;">
-          <div id="views" style="font-size: 14px; display: inline-block;">조회수 {{video.views}}회</div>
-          <div id="date" style="font-size: 14px; display: inline-block;">• {{video.date}}</div>
-        </div>
-        <div id="flex-box" style="flex-grow: 1; flex-shrink: 1;"></div>
-        <!-- Button effect from here: https://codepen.io/recodenow/pen/bqpzBE -->
-        <div class="rating">
-          <form id="rating" action="/rate" method="GET">
-            <input type="hidden" id="f_name" name="name">
-            <input type="hidden" id="f_type" name="type">
-            <input type="hidden" id="f_mode" name="mode">
-          </form>
-          <div id="like_btn" class="like">
-            <i class="fa fa-thumbs-up"></i>
-            <span class="r_count">{{video.rate.like}}</span>
-          </div>
-          <div id="dislike_btn" class="dislike">
-            <i class="fa fa-thumbs-down"></i>
-            <span class="r_count">{{video.rate.dislike}}</span>
-          </div>
-          <div class='c_dislike' style="height: 2px; background: #ddd">
-            <div class='c_like'>
-            </div>
-          </div>
-        </div>
-        <div class="share">
-          <i class="fas fa-share"></i>
-          <span style="font-size: 17px;">공유</span>
-        </div>
-        <script>
-          function SubForm() {
-            var $form = $('#rating');
-            $.get({
-              url: $form.attr('action'),
-              type: 'GET',
-              data: $form.serialize()
-            });
-          }
-
-          $('.like, .dislike').on('click', function() {
-            event.preventDefault();
-
-            document.getElementById('f_name').setAttribute('value', window.location.href.split('/').reverse()[0]);
-
-            if ($('.active').attr('id') == $(this).attr('id')) {
-              $('.active').removeClass('active');
-
-              document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
-              document.getElementById('f_mode').setAttribute('value', 'cancel');
-              SubForm();
-              
-              $('.r_count', this).text(Number($('.r_count', this).text()) - 1);
+          }, false);
+  
+          fullscreen.addEventListener("click", function() {
+            if (document.fullscreenElement == null) {
+              video_container.webkitRequestFullscreen();
+              $('#fs_icon').attr('class', 'fas fa-compress');
+              fullscreen.title = "전체화면 종료(f)";
+              video.width = screen.width;
+              video.height = screen.height;
             }
             else {
-              document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
-              document.getElementById('f_mode').setAttribute('value', 'submit');
-
-              if ($('.active').length > 0) {
-                $('.active').find('.r_count').text(Number($('.active').find('.r_count').text()) - 1);
-                $('.active').removeClass('active');
-
-                document.getElementById('f_mode').setAttribute('value', 'change');
-              }
-              SubForm();
-
-              $('.r_count', this).text(Number($('.r_count', this).text()) + 1);
-              $(this).addClass('active');
-            }            
+              document.exitFullscreen();
+              $('#fs_icon').attr('class', 'fas fa-expand');
+              fullscreen.title = "전체화면(f)";
+              video.width = "1280";
+              video.height = "720";
+            }
           });
-
-          $('.r_count').on("DOMSubtreeModified", function() {
+  
+          document.onwebkitfullscreenchange = function() {
+            if (document.fullscreenElement == null) {
+              $('#fs_icon').attr('class', 'fas fa-expand');
+              fullscreen.title = "전체화면(f)";
+              video.width = "1280";
+              video.height = "720";
+            }
+          }
+  
+          var mouseClient = 0;
+          var mouseOffset = 0;
+          var offset = 0
+          var isDown = false;
+  
+          prog_thumb.addEventListener('mousedown', function(e) {
+            isDown = true;
+            offset = prog_thumb.offsetLeft - e.clientX;
+            video.pause();
+          }, true);
+  
+          progressBar.addEventListener('mousemove', function(event) {
+            event.preventDefault();
+            if (isDown) {
+              mouseOffset = event.clientX - $(this).offset().left;
+              if (mouseOffset < 0 || mouseOffset > this.offsetWidth) {
+                return
+              }
+  
+              mouseClient = event.clientX;
+              prog_thumb.style.position = "absolute";
+              prog_thumb.style.left = (mouseClient + offset) + "px";
+              prog_thumb.style.bottom = "-4px";
+  
+              var bx = this.offsetWidth;
+              video.currentTime = video.duration * mouseOffset / bx;
+            }
+          }, true);
+  
+          document.addEventListener('keydown', function(e) {
+            var keyCode = e.keyCode;
+            var volume = document.getElementById("volume");
+  
+            if ($('.p_dialog')[0].style.display == "block") {
+              return;
+            } 
+  
+            if (keyCode == 32) { // Space Bar
+              togglePlayPause();
+            }
+            else if (keyCode == 37) { // Left Arrow
+              video.currentTime -= 5;
+            }
+            else if (keyCode == 38 && document.activeElement === video_container) { // Up Arrow
+              volume.value = Number(volume.value) + 5;
+              video.volume = volume.value / 100;
+            }
+            else if (keyCode == 39) { // Right Arrow
+              video.currentTime += 5;
+            }
+            else if (keyCode == 40 && document.activeElement === video_container) { // Down Arrow
+              volume.value -= 5;
+              video.volume = volume.value / 100;
+            }
+            else if (keyCode == 70) { // F key
+              fullscreen.click();
+            }
+            else if (keyCode == 75) { // K key
+              togglePlayPause();
+            }
+            else if (keyCode == 77) { // M key
+              toggleMute();
+            }
+  
+            if (volume.value > 50) {
+              volume.style.background = "linear-gradient(to right, #FFF " + volume.value + "%, transparent " + (100 - volume.value) + "%)";
+            }
+            else {
+              volume.style.background = "linear-gradient(to left, transparent " + (100 - volume.value) + "%, #FFF " + volume.value + "%)"
+            }
+  
+            setVolume();
+          }, false);
+  
+          video_container.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+            var contextElement = document.getElementById("video_context_menu");
+            contextElement.style.top = event.clientY + "px";
+            contextElement.style.left = event.clientX + "px";
+            contextElement.classList.add("active");
+          }, false);
+  
+          window.addEventListener("click", function(event) {
+            document.getElementById("video_context_menu").classList.remove("active");
+            if (event.target !== st_icon){
+              if ($('#st_icon').hasClass('st_active')) {
+                isSetting = !isSetting;
+                $('#st_icon').removeClass('st_active');
+                document.getElementById("video_setting_menu").classList.remove("active");
+              }
+            }
+          }, false);
+  
+          function toggleLoop() {
+            video.loop = !video.loop;
+          }
+  
+          function copyUrl(isCurrent) {
+            var temp = document.createElement("textarea");
+            var url = window.location.origin + window.location.pathname;
+            document.body.appendChild(temp);
+            temp.value = isCurrent ? url + "?t=" + Math.floor(video.currentTime) : url;
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+          }
+  
+        </script>
+      </div>
+      <div>
+        {% if video.title %}
+        <h1 style="font-size: 18px; font-weight: normal;">{{video.title}}</h1>
+        {% else %}
+        <h1>A Random Video</h1>
+        {% endif %}
+        <div id="info" style="color: #808080; display: flex; border-bottom: 1px solid #ddd;">
+          <div id="text" style="height: auto;">
+            <div id="views" style="font-size: 14px; display: inline-block;">조회수 {{video.views}}회</div>
+            <div id="date" style="font-size: 14px; display: inline-block;">• {{video.date}}</div>
+          </div>
+          <div id="flex-box" style="flex-grow: 1; flex-shrink: 1;"></div>
+          <!-- Button effect from here: https://codepen.io/recodenow/pen/bqpzBE -->
+          <div class="rating">
+            <form id="rating" action="/rate" method="GET">
+              <input type="hidden" id="f_name" name="name">
+              <input type="hidden" id="f_type" name="type">
+              <input type="hidden" id="f_mode" name="mode">
+            </form>
+            <div id="like_btn" class="like">
+              <i class="fa fa-thumbs-up"></i>
+              <span class="r_count">{{video.rate.like}}</span>
+            </div>
+            <div id="dislike_btn" class="dislike">
+              <i class="fa fa-thumbs-down"></i>
+              <span class="r_count">{{video.rate.dislike}}</span>
+            </div>
+            <div class='c_dislike' style="height: 2px; background: #ddd">
+              <div class='c_like'>
+              </div>
+            </div>
+          </div>
+          <div class="share">
+            <i class="fas fa-share"></i>
+            <span style="font-size: 17px;">공유</span>
+          </div>
+          <script>
+            function SubForm() {
+              var $form = $('#rating');
+              $.get({
+                url: $form.attr('action'),
+                type: 'GET',
+                data: $form.serialize()
+              });
+            }
+  
+            $('.like, .dislike').on('click', function() {
+              event.preventDefault();
+  
+              document.getElementById('f_name').setAttribute('value', window.location.href.split('/').reverse()[0]);
+  
+              if ($('.active').attr('id') == $(this).attr('id')) {
+                $('.active').removeClass('active');
+  
+                document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
+                document.getElementById('f_mode').setAttribute('value', 'cancel');
+                SubForm();
+                
+                $('.r_count', this).text(Number($('.r_count', this).text()) - 1);
+              }
+              else {
+                document.getElementById('f_type').setAttribute('value', this.getAttribute('class'));
+                document.getElementById('f_mode').setAttribute('value', 'submit');
+  
+                if ($('.active').length > 0) {
+                  $('.active').find('.r_count').text(Number($('.active').find('.r_count').text()) - 1);
+                  $('.active').removeClass('active');
+  
+                  document.getElementById('f_mode').setAttribute('value', 'change');
+                }
+                SubForm();
+  
+                $('.r_count', this).text(Number($('.r_count', this).text()) + 1);
+                $(this).addClass('active');
+              }            
+            });
+  
+            $('.r_count').on("DOMSubtreeModified", function() {
+              var h_like = $('.r_count')[0];
+              var h_dislike = $('.r_count')[1];
+  
+              var b_like = Number(h_like.innerText);
+              var b_dislike = Number(h_dislike.innerText);
+  
+              var p_like = b_like / (b_like + b_dislike) * 100;
+              if (isNaN(p_like)) {
+                $('.c_like').attr('style', 'height: 2px; background-color: #808080; width: 50%');
+              }
+              else {
+                $('.c_like').attr('style', 'height: 2px; background-color: #065FD4; width: ' + p_like + '%');
+              }
+            });
+  
             var h_like = $('.r_count')[0];
             var h_dislike = $('.r_count')[1];
-
-            var b_like = Number(h_like.innerText);
-            var b_dislike = Number(h_dislike.innerText);
-
-            var p_like = b_like / (b_like + b_dislike) * 100;
+            var p_like = Number(h_like.innerText) / (Number(h_like.innerText) + Number(h_dislike.innerText)) * 100;
+  
             if (isNaN(p_like)) {
               $('.c_like').attr('style', 'height: 2px; background-color: #808080; width: 50%');
             }
             else {
               $('.c_like').attr('style', 'height: 2px; background-color: #065FD4; width: ' + p_like + '%');
             }
-          });
-
-          var h_like = $('.r_count')[0];
-          var h_dislike = $('.r_count')[1];
-          var p_like = Number(h_like.innerText) / (Number(h_like.innerText) + Number(h_dislike.innerText)) * 100;
-
-          if (isNaN(p_like)) {
-            $('.c_like').attr('style', 'height: 2px; background-color: #808080; width: 50%');
-          }
-          else {
-            $('.c_like').attr('style', 'height: 2px; background-color: #065FD4; width: ' + p_like + '%');
-          }
-        </script>
+          </script>
+        </div>
       </div>
+      
     </div>
-    
-  </div>
-  <div id="second" style="padding-top: 18px;">
-    <div id="next_container" style="padding-top: 10px;">
-      <span>다음 동영상</span><p>
-      <a href="#" onclick="javascript:nextVideo();" style="text-decoration: none;">
-        <img src="/static/{{next_video.data.thumnail}}" style="float: left;">
-        <span class="next_span next_title">{{next_video.data.title}}</span>
-      </a>
-      <br>
-      <span class="next_span">조회수 {{next_video.data.views}}회 • {{next_video.data.date}}</span>
+    <div id="second" style="padding-top: 18px;">
+      <div id="next_container" style="padding-top: 10px;">
+        <span>다음 동영상</span><p>
+        <a href="#" onclick="javascript:nextVideo();" style="text-decoration: none;">
+          <img src="/static/{{next_video.data.thumnail}}" style="float: left;">
+          <span class="next_span next_title">{{next_video.data.title}}</span>
+        </a>
+        <br>
+        <span class="next_span">조회수 {{next_video.data.views}}회 • {{next_video.data.date}}</span>
+      </div>
+      <script>
+        function nextVideo() {
+          window.location.href = "/watch/{{next_video.name}}";
+        }
+      </script>
     </div>
-    <script>
-      function nextVideo() {
-        window.location.href = "/watch/{{next_video.name}}";
-      }
-    </script>
   </div>
   <div id="p_dialog" class="p_dialog">
     <div class="p_content">
