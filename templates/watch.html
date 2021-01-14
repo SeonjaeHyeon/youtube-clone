@@ -450,9 +450,9 @@
             var keyCode = e.keyCode;
             var volume = document.getElementById("volume");
   
-            if ($('.p_dialog')[0].style.display == "block") {
+            if ($('.p_dialog')[0].style.display == "block" || document.getElementById("search_input") == document.activeElement) {
               return;
-            } 
+            }
   
             if (keyCode == 32) { // Space Bar
               togglePlayPause();
