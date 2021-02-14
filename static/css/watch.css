@@ -82,4 +82,5 @@ body {
 
 #main {
     display: flex;
+    padding-top: 1.7em;
 }
