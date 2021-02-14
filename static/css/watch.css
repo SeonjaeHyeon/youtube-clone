@@ -1,9 +1,20 @@
+body {
+    margin: 0px;
+    background-color: #F9F9F9;
+}
+
 #top_bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-left: 16px;
     padding-right: 16px;
+    background-color: white;
+}
+
+#top_bar h1 {
+    margin-block-start: .2em;
+    margin-block-end: .2em;
 }
 
 #bar_first {
