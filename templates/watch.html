@@ -637,6 +637,13 @@
     <div id="second">
       <div id="next_container">
         <span>다음 동영상</span>
+        <span style="float: right;">
+          <span style="font-size: .9rem;">자동재생</span>
+          <label class="next_switch">
+            <input type="checkbox">
+            <span class="next_slider"></span>
+          </label>
+        </span>
         <p style="white-space: nowrap;">
           <a href="#" onclick="javascript:nextVideo();" style="text-decoration: none;">
             <img src="/static/{{next_video.data.thumnail}}" style="float: left;">
@@ -650,6 +657,14 @@
         function nextVideo() {
           window.location.href = "/watch/{{next_video.name}}";
         }
+
+        document.getElementsByTagName('video')[0].addEventListener('ended', () => {
+            var chk_value = document.getElementsByClassName('next_switch')[0].getElementsByTagName('input')[0].checked;
+
+            if (chk_value) {
+              nextVideo();
+            }
+        }, false);
       </script>
     </div>
   </div>
