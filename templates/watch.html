@@ -636,13 +636,15 @@
     </div>
     <div id="second">
       <div id="next_container">
-        <span>다음 동영상</span><p>
-        <a href="#" onclick="javascript:nextVideo();" style="text-decoration: none;">
-          <img src="/static/{{next_video.data.thumnail}}" style="float: left;">
-          <span class="next_span next_title">{{next_video.data.title}}</span>
-        </a>
-        <br>
-        <span class="next_span">조회수 {{next_video.data.views}}회 • {{next_video.data.date}}</span>
+        <span>다음 동영상</span>
+        <p style="white-space: nowrap;">
+          <a href="#" onclick="javascript:nextVideo();" style="text-decoration: none;">
+            <img src="/static/{{next_video.data.thumnail}}" style="float: left;">
+            <span class="next_span next_title">{{next_video.data.title}}</span>
+          </a>
+          <br>
+          <span class="next_span">조회수 {{next_video.data.views}}회 • {{next_video.data.date}}</span>
+        </p>
       </div>
       <script>
         function nextVideo() {
